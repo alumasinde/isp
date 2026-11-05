@@ -1,0 +1,20 @@
+{
+    "generated_by": "php 8.2.12 openssl aes-256-cbc (Laravel encrypt format)",
+    "app_key": "base64:sAiT8U+pWqN9DWB75JpJHZUo18IlXx27ZMdTHPwMn+g=",
+    "values": {
+        "ip_address": "10.10.10.1",
+        "api_port": "8728",
+        "username": "admin",
+        "password": "s3cr3t-Pa55",
+        "unicode": "R\u0101jsh\u0101h\u012b-\u09e7",
+        "quoted": "p\"a'ss\\word"
+    },
+    "payloads": {
+        "ip_address": "eyJpdiI6IkVMTE1pQm45WlhzL2FmQ3A4d3ArMWc9PSIsInZhbHVlIjoicXA3SWdoQUFidjhZQTJESkI2R0dTZjJDd2F0MitTSGNmSGVRbjRMOUhqWT0iLCJtYWMiOiIzNzVjYjhjNDJiNzNiNmVjNTAxYTA4NzUwNzg5M2RmZDE2YjAxNjdiZjFkZWZjMTU5YTBhODQ0MDI4M2E3NTU1IiwidGFnIjoiIn0=",
+        "api_port": "eyJpdiI6IkY2NklzWmc1djNEemlDUVdZZzZYWlE9PSIsInZhbHVlIjoiYjFPb0toY3Y4YmllRnpRZ0s5Q3hPUT09IiwibWFjIjoiMWFjODlmYzA3NTk0ODE5YWY1OTMwNDFiOTY3ZmM4NWYxZmZmYzljMTU3YzhjZGI2YmI1YzA4ZDViY2UxOTJlMCIsInRhZyI6IiJ9",
+        "username": "eyJpdiI6InFnRUt3a2xGNTlxY3E4N2QzM3ZwK3c9PSIsInZhbHVlIjoidS9FR2Q1SFpGcWRGdVhNMC9CMzlpUT09IiwibWFjIjoiZTAyMTU4NmIxODFmM2YzZmVkMDMzYmNiZWEyOWJiZWQ2MDk5MmIzMzkxZmM2MDNkMTVlMjk4NGMyZTk3MjVhOSIsInRhZyI6IiJ9",
+        "password": "eyJpdiI6Im4xb2VOZUR4S3hXSVV4RjhiWlRHdmc9PSIsInZhbHVlIjoiU3MzYVhyL1hlZjRlU1gzRXhGTWtxRkpyOVdNRVFBTmpOZEhsaXJuY1JXND0iLCJtYWMiOiIwMGRhYmJhMjZmNDBiNzAxMWIyNTcxNGI3ZDM0MDY3MjBiYzJiYTlkMzA0NzcwODRhYTQyNGJlNWQxOTMzYWRmIiwidGFnIjoiIn0=",
+        "unicode": "eyJpdiI6IkU0Nnh6V1RlUTdpS2RoTUsrQmZ5UVE9PSIsInZhbHVlIjoiZkNmbkR2SkVrcjhzTFZINjg5cDZ5b09Db1pCLzJma3BvS3c3eE9LQ1U1MD0iLCJtYWMiOiJjYmE0NDAyOTFiMTdhZDFkMzZiYjgyYWFjYmVhOGFkYjYzZmVlMTA3ZmMzM2Q5YmNlNDRiNWMxMTI3YjQyMzZmIiwidGFnIjoiIn0=",
+        "quoted": "eyJpdiI6InI5dWRjeWhsaXM2UmFjelZRZFFSeXc9PSIsInZhbHVlIjoiQzBsVWZ0cWUxeGVMRk1acnlNRm0rVnlrWmp6MzExdTFSMnhyVTFNNXpOND0iLCJtYWMiOiJkYmQyNjQ0ZjMxOTVjOGFhOGExNzYwMzBlNjQ5YWVlZmI5Y2M2NzI4ZmFmNDU1M2NlNGMxNmYzOTA5ZTNiZDA5IiwidGFnIjoiIn0="
+    }
+}
