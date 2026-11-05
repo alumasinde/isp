@@ -122,7 +122,7 @@
                                         <input class="form-check-input ms-0 me-2" type="checkbox" name="packages[]" value="{{ $package->id }}" id="packageCheck{{ $package->id }}" {{ is_array(old('packages')) && in_array($package->id, old('packages')) ? 'checked' : '' }}>
                                         <label class="form-check-label fw-semibold text-dark cursor-pointer d-block" for="packageCheck{{ $package->id }}">
                                             {{ $package->package }}
-                                            <span class="d-block text-muted small fw-normal">Price: BDT {{ number_format($package->price, 2) }} | Router: {{ $package->router_name ?? 'Global' }}</span>
+                                            <span class="d-block text-muted small fw-normal">Price: KES {{ number_format($package->price, 2) }} | Router: {{ $package->router_name ?? 'Global' }}</span>
                                         </label>
                                     </div>
                                 </div>

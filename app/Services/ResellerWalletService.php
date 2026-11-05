@@ -35,7 +35,7 @@ class ResellerWalletService
         return DB::transaction(function () use ($reseller, $amount, $description, $refType, $refId) {
             // Check balance
             if ($reseller->balance < $amount) {
-                throw new \Exception("Insufficient wallet balance. Available: BDT {$reseller->balance}");
+                throw new \Exception("Insufficient wallet balance. Available: KES {$reseller->balance}");
             }
 
             $reseller->decrement('balance', $amount);

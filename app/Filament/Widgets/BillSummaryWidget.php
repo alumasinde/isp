@@ -22,17 +22,17 @@ class BillSummaryWidget extends BaseWidget
         $billing = $user->customer->billing;
 
         return [
-            Stat::make('Monthly Bill', '৳'.number_format($billing->monthly_rent, 2))
+            Stat::make('Monthly Bill', 'KSh '.number_format($billing->monthly_rent, 2))
                 ->description('Current Plan Rent')
                 ->descriptionIcon('heroicon-m-arrow-trending-up')
                 ->chart([7, 3, 5, 2, 8, 4, 10])
                 ->color('info'),
-            Stat::make('Paid Amount', '৳'.number_format($billing->paid_amount, 2))
+            Stat::make('Paid Amount', 'KSh '.number_format($billing->paid_amount, 2))
                 ->description('Amount paid this month')
                 ->descriptionIcon('heroicon-m-check-circle')
                 ->chart([15, 18, 12, 24, 30, 28, 35])
                 ->color('success'),
-            Stat::make('Total Due', '৳'.number_format($billing->total_due_amount, 2))
+            Stat::make('Total Due', 'KSh '.number_format($billing->total_due_amount, 2))
                 ->description($billing->total_due_amount > 0 ? 'Pending payment' : 'No outstanding balance')
                 ->descriptionIcon($billing->total_due_amount > 0 ? 'heroicon-m-exclamation-triangle' : 'heroicon-m-check-badge')
                 ->chart($billing->total_due_amount > 0 ? [10, 8, 9, 6, 5, 4, 2] : [0, 0, 0, 0, 0, 0, 0])

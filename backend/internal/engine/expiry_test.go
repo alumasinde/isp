@@ -91,7 +91,7 @@ func TestEvaluatePPPRules(t *testing.T) {
 }
 
 func TestVoucherExpiry(t *testing.T) {
-	tz := time.FixedZone("Asia/Dhaka", 6*60*60)
+	tz := time.FixedZone("Africa/Nairobi", 3*60*60)
 	firstLogin := time.Date(2026, time.November, 5, 10, 0, 0, 0, time.UTC)
 
 	got, err := VoucherExpiry(firstLogin, "1h30m", tz)

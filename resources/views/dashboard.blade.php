@@ -36,14 +36,14 @@
                     <div class="d-flex justify-content-between align-items-sm-center">
                         <div>
                             <h6 class="text-uppercase fw-bold mb-1" style="font-size: 0.72rem; letter-spacing: 1px; opacity: 0.85;">{{ __("Today's PPPoE Sales") }}</h6>
-                            <h3 class="fw-bold mb-0">৳{{ number_format($billInformationData['today_paid_amount'] ?? 0, 0) }}</h3>
+                            <h3 class="fw-bold mb-0">KSh {{ number_format($billInformationData['today_paid_amount'] ?? 0, 0) }}</h3>
                         </div>
                         <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(255,255,255,0.2);">
                             <i class="bi bi-wallet2 fs-4"></i>
                         </div>
                     </div>
                     <div class="mt-3 pt-2 border-top border-white border-opacity-25">
-                        <span class="small fw-medium" style="opacity: 0.9;"><i class="bi bi-calendar3 me-1"></i>{{ __('Total Mo:') }} ৳{{ number_format($billInformationData['paid_amount'] ?? 0, 0) }}</span>
+                        <span class="small fw-medium" style="opacity: 0.9;"><i class="bi bi-calendar3 me-1"></i>{{ __('Total Mo:') }} KSh {{ number_format($billInformationData['paid_amount'] ?? 0, 0) }}</span>
                         <span class="small float-end" style="opacity: 0.9;"><i class="bi bi-arrow-up-right me-1"></i>{{ __('PPPoE Only') }}</span>
                     </div>
                 </div>
@@ -60,14 +60,14 @@
                     <div class="d-flex justify-content-between align-items-sm-center">
                         <div>
                             <h6 class="text-uppercase fw-bold mb-1" style="font-size: 0.72rem; letter-spacing: 1px; opacity: 0.85;">{{ __("Today's Hotspot Sales") }}</h6>
-                            <h3 class="fw-bold mb-0">৳{{ number_format($billInformationData['hotspot_today'] ?? 0, 0) }}</h3>
+                            <h3 class="fw-bold mb-0">KSh {{ number_format($billInformationData['hotspot_today'] ?? 0, 0) }}</h3>
                         </div>
                         <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(255,255,255,0.2);">
                             <i class="bi bi-wifi fs-4"></i>
                         </div>
                     </div>
                     <div class="mt-3 pt-2 border-top border-white border-opacity-25">
-                        <span class="small fw-medium" style="opacity: 0.9;"><i class="bi bi-calendar3 me-1"></i>{{ __('Total Mo:') }} ৳{{ number_format($billInformationData['hotspot_total'] ?? 0, 0) }}</span>
+                        <span class="small fw-medium" style="opacity: 0.9;"><i class="bi bi-calendar3 me-1"></i>{{ __('Total Mo:') }} KSh {{ number_format($billInformationData['hotspot_total'] ?? 0, 0) }}</span>
                         <span class="small float-end" style="opacity: 0.9;"><i class="bi bi-arrow-up-right me-1"></i>{{ __('Hotspot Only') }}</span>
                     </div>
                 </div>
@@ -84,14 +84,14 @@
                     <div class="d-flex justify-content-between align-items-sm-center">
                         <div>
                             <h6 class="text-uppercase fw-bold mb-1" style="font-size: 0.72rem; letter-spacing: 1px; opacity: 0.85;">{{ __('Total Global Revenue') }}</h6>
-                            <h3 class="fw-bold mb-0">৳{{ number_format(($billInformationData['paid_amount'] ?? 0) + ($billInformationData['hotspot_total'] ?? 0), 0) }}</h3>
+                            <h3 class="fw-bold mb-0">KSh {{ number_format(($billInformationData['paid_amount'] ?? 0) + ($billInformationData['hotspot_total'] ?? 0), 0) }}</h3>
                         </div>
                         <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(255,255,255,0.2);">
                             <i class="bi bi-graph-up-arrow fs-4"></i>
                         </div>
                     </div>
                     <div class="mt-3 pt-2 border-top border-white border-opacity-25">
-                        <span class="small fw-semibold text-warning" style="opacity: 1;"><i class="bi bi-exclamation-triangle-fill me-1"></i>{{ __('Pending Due:') }} ৳{{ number_format($billInformationData['due_amount'] ?? 0, 0) }}</span>
+                        <span class="small fw-semibold text-warning" style="opacity: 1;"><i class="bi bi-exclamation-triangle-fill me-1"></i>{{ __('Pending Due:') }} KSh {{ number_format($billInformationData['due_amount'] ?? 0, 0) }}</span>
                         <span class="small float-end" style="opacity: 0.9;">{{ __('Total Arrears') }}</span>
                     </div>
                 </div>
@@ -153,7 +153,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-uppercase fw-bold mb-1 text-white-50" style="font-size: 0.72rem; letter-spacing: 1px;">{{ __('Wallet Balances') }}</h6>
-                            <h3 class="fw-bold mb-0">৳{{ number_format($resellerData['total_balance'] ?? 0, 2) }}</h3>
+                            <h3 class="fw-bold mb-0">KSh {{ number_format($resellerData['total_balance'] ?? 0, 2) }}</h3>
                         </div>
                         <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(255,255,255,0.15);">
                             <i class="bi bi-cash-stack fs-4 text-success"></i>
@@ -173,7 +173,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-uppercase fw-bold mb-1 text-white-50" style="font-size: 0.72rem; letter-spacing: 1px;">{{ __('Total Commissions') }}</h6>
-                            <h3 class="fw-bold mb-0">৳{{ number_format($resellerData['total_commission'] ?? 0, 2) }}</h3>
+                            <h3 class="fw-bold mb-0">KSh {{ number_format($resellerData['total_commission'] ?? 0, 2) }}</h3>
                         </div>
                         <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(255,255,255,0.15);">
                             <i class="bi bi-percent fs-4 text-light"></i>
@@ -565,7 +565,7 @@
                             },
                             grid: { borderColor: 'rgba(128,128,128,0.15)', strokeDashArray: 4 },
                             tooltip: {
-                                y: { formatter: val => '৳ ' + Math.abs(val).toLocaleString(undefined, {minimumFractionDigits:2}) },
+                                y: { formatter: val => 'KSh ' + Math.abs(val).toLocaleString(undefined, {minimumFractionDigits:2}) },
                             },
                         };
                         window.chart2 = new ApexCharts(billEl, billInformation);
@@ -643,7 +643,7 @@
                             tooltip: {
                                 shared: true,
                                 intersect: false,
-                                y: { formatter: val => '৳ ' + val.toLocaleString(undefined,{minimumFractionDigits:2}) },
+                                y: { formatter: val => 'KSh ' + val.toLocaleString(undefined,{minimumFractionDigits:2}) },
                             },
                         };
                         window.chart2b = new ApexCharts(billStatusEl, billByStatus);

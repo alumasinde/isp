@@ -463,7 +463,7 @@ class ScheduledTasksController extends Controller
 
     public function userDisable()
     {
-        $tz = config('app.timezone') ?: 'Asia/Dhaka';
+        $tz = config('app.timezone') ?: 'Africa/Nairobi';
         $today = Carbon::now($tz)->startOfDay();
         $successfulIDs = [];
         $errorIDs = [];

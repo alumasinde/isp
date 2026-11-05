@@ -39,7 +39,7 @@ class ResellerTest extends TestCase
         $user = User::create([
             'name' => 'John Reseller',
             'email' => 'john@reseller.com',
-            'mobile' => '01711122233',
+            'mobile' => '254711122233',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole($role);
@@ -69,7 +69,7 @@ class ResellerTest extends TestCase
         $user = User::create([
             'name' => 'John Reseller',
             'email' => 'john@reseller.com',
-            'mobile' => '01711122233',
+            'mobile' => '254711122233',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole($role);
@@ -98,7 +98,7 @@ class ResellerTest extends TestCase
         $user = User::create([
             'name' => 'John Reseller',
             'email' => 'john@reseller.com',
-            'mobile' => '01711122233',
+            'mobile' => '254711122233',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole($role);
@@ -232,7 +232,7 @@ class ResellerTest extends TestCase
         $user = User::create([
             'name' => 'John Reseller',
             'email' => 'john@reseller.com',
-            'mobile' => '01711122233',
+            'mobile' => '254711122233',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole($role);
@@ -243,7 +243,7 @@ class ResellerTest extends TestCase
             'commission_percentage' => 10.00,
             'balance' => 0.00,
             'status' => 'active',
-            'phone' => '01711122233',
+            'phone' => '254711122233',
         ]);
 
         $package = PackageList::create([
@@ -284,7 +284,7 @@ class ResellerTest extends TestCase
         $user = User::create([
             'name' => 'John Reseller',
             'email' => 'john@reseller.com',
-            'mobile' => '01711122233',
+            'mobile' => '254711122233',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole($role);
@@ -295,7 +295,7 @@ class ResellerTest extends TestCase
             'commission_percentage' => 10.00,
             'balance' => 0.00,
             'status' => 'active',
-            'phone' => '01711122233',
+            'phone' => '254711122233',
         ]);
 
         $customer = CustomersInfo::create([
@@ -333,7 +333,7 @@ class ResellerTest extends TestCase
         $user = User::create([
             'name' => 'John Reseller',
             'email' => 'john@reseller.com',
-            'mobile' => '01711122233',
+            'mobile' => '254711122233',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole($role);
@@ -344,7 +344,7 @@ class ResellerTest extends TestCase
             'commission_percentage' => 10.00,
             'balance' => 0.00,
             'status' => 'active',
-            'phone' => '01711122233',
+            'phone' => '254711122233',
         ]);
 
         $otherUser = User::create(['name' => 'Other', 'email' => 'other@reseller.com', 'mobile' => '01711122244', 'password' => bcrypt('password')]);
@@ -380,7 +380,7 @@ class ResellerTest extends TestCase
         $user = User::create([
             'name' => 'John Reseller',
             'email' => 'john@reseller.com',
-            'mobile' => '01711122233',
+            'mobile' => '254711122233',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole($role);
@@ -391,7 +391,7 @@ class ResellerTest extends TestCase
             'commission_percentage' => 10.00,
             'balance' => 0.00,
             'status' => 'active',
-            'phone' => '01711122233',
+            'phone' => '254711122233',
         ]);
 
         $this->actingAs($user);
@@ -455,7 +455,7 @@ class ResellerTest extends TestCase
         $user = User::create([
             'name' => 'John Reseller',
             'email' => 'john@reseller.com',
-            'mobile' => '01711122233',
+            'mobile' => '254711122233',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole($role);
@@ -466,7 +466,7 @@ class ResellerTest extends TestCase
             'commission_percentage' => 10.00,
             'balance' => 350.00,
             'status' => 'active',
-            'phone' => '01711122233',
+            'phone' => '254711122233',
         ]);
 
         $baseDomain = parse_url(config('app.url'), PHP_URL_HOST) ?: 'localhost';
@@ -497,7 +497,7 @@ class ResellerTest extends TestCase
         $user1 = User::create([
             'name' => 'John Reseller',
             'email' => 'john@reseller.com',
-            'mobile' => '01711122233',
+            'mobile' => '254711122233',
             'password' => bcrypt('password'),
         ]);
         $user1->assignRole($role);
@@ -508,7 +508,7 @@ class ResellerTest extends TestCase
             'commission_percentage' => 10.00,
             'balance' => 0.00,
             'status' => 'active',
-            'phone' => '01711122233',
+            'phone' => '254711122233',
         ]);
 
         $user2 = User::create([
@@ -584,7 +584,7 @@ class ResellerTest extends TestCase
         $user1 = User::create([
             'name' => 'Reseller One',
             'email' => 'reseller1@isp.com',
-            'mobile' => '01711122233',
+            'mobile' => '254711122233',
             'password' => bcrypt('password'),
         ]);
         $user1->assignRole($role);
@@ -595,7 +595,7 @@ class ResellerTest extends TestCase
             'commission_percentage' => 10.00,
             'balance' => 0.00,
             'status' => 'active',
-            'phone' => '01711122233',
+            'phone' => '254711122233',
         ]);
 
         $user2 = User::create([
@@ -659,7 +659,7 @@ class ResellerTest extends TestCase
         $user = User::create([
             'name' => 'John Reseller',
             'email' => 'john@reseller.com',
-            'mobile' => '01711122233',
+            'mobile' => '254711122233',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole($role);
@@ -670,7 +670,7 @@ class ResellerTest extends TestCase
             'commission_percentage' => 10.00,
             'balance' => 0.00,
             'status' => 'active',
-            'phone' => '01711122233',
+            'phone' => '254711122233',
         ]);
 
         $customer = CustomersInfo::create([
@@ -717,7 +717,7 @@ class ResellerTest extends TestCase
         $user = User::create([
             'name' => 'John Reseller',
             'email' => 'john@reseller.com',
-            'mobile' => '01711122233',
+            'mobile' => '254711122233',
             'password' => bcrypt('password'),
         ]);
         $user->assignRole($role);
@@ -728,7 +728,7 @@ class ResellerTest extends TestCase
             'commission_percentage' => 10.00,
             'balance' => 0.00,
             'status' => 'active',
-            'phone' => '01711122233',
+            'phone' => '254711122233',
         ]);
 
         $package = PackageList::create([

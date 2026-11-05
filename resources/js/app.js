@@ -466,7 +466,7 @@ document.addEventListener('livewire:init', () => {
                 const handleUpdate = () => {
                     if (isInternalUpdate) return;
                     let fullNumber = iti.getNumber();
-                    // Strip the leading '+' prefix to match database representation (e.g. 8801840451881)
+                    // Strip the leading '+' prefix to match database representation (e.g. 254712345678)
                     if (fullNumber && fullNumber.startsWith('+')) {
                         fullNumber = fullNumber.substring(1);
                     }

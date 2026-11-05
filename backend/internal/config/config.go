@@ -49,7 +49,7 @@ type Config struct {
 func Load() (*Config, error) {
 	loadDotEnv(".env")
 
-	loc, err := time.LoadLocation(env("APP_TIMEZONE", "Asia/Dhaka"))
+	loc, err := time.LoadLocation(env("APP_TIMEZONE", "Africa/Nairobi"))
 	if err != nil {
 		return nil, fmt.Errorf("invalid APP_TIMEZONE: %w", err)
 	}

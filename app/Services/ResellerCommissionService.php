@@ -78,7 +78,7 @@ class ResellerCommissionService
                 $commission->id
             );
 
-            Log::info("Reseller commission of BDT {$commissionAmount} successfully processed for reseller {$reseller->id}");
+            Log::info("Reseller commission of KES {$commissionAmount} successfully processed for reseller {$reseller->id}");
 
             return $commission;
         });

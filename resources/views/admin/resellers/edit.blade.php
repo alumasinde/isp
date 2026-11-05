@@ -116,7 +116,7 @@
                                             <input class="form-check-input ms-0 me-2" type="checkbox" name="packages[]" value="{{ $package->id }}" id="packageCheck{{ $package->id }}" {{ in_array($package->id, $assignedPackageIds) ? 'checked' : '' }}>
                                             <label class="form-check-label fw-semibold text-dark cursor-pointer" for="packageCheck{{ $package->id }}">
                                                 {{ $package->package }}
-                                                <span class="d-block text-muted small fw-normal">Price: BDT {{ number_format($package->price, 2) }} | Router: {{ $package->router_name ?? 'Global' }}</span>
+                                                <span class="d-block text-muted small fw-normal">Price: KES {{ number_format($package->price, 2) }} | Router: {{ $package->router_name ?? 'Global' }}</span>
                                             </label>
                                         </div>
                                     </div>
@@ -200,7 +200,7 @@
             <div class="card border-0 shadow-sm rounded-3 mb-4" style="background: linear-gradient(135deg, #1e293b, #0f172a); color: white;">
                 <div class="card-body">
                     <h6 class="text-uppercase fw-bold mb-2 text-white-50" style="font-size: 0.75rem; letter-spacing: 1px;">{{ __('Wallet Status') }}</h6>
-                    <h2 class="fw-bold mb-1">৳{{ number_format($reseller->balance, 2) }}</h2>
+                    <h2 class="fw-bold mb-1">KSh {{ number_format($reseller->balance, 2) }}</h2>
                     <p class="small text-white-50 mb-0">{{ __('Reseller ID:') }} #{{ $reseller->id }}</p>
                     
                     <div class="mt-4 pt-3 border-top border-white-50 border-opacity-25 d-flex gap-2">
@@ -231,7 +231,7 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label fw-semibold text-muted mb-1">{{ __('Amount (BDT)') }}</label>
+                                    <label class="form-label fw-semibold text-muted mb-1">{{ __('Amount (KES)') }}</label>
                                     <input type="number" step="0.01" name="amount" class="form-control shadow-xs" required min="0.01" style="border-radius: 6px;">
                                 </div>
                                 <div class="mb-3">
@@ -255,7 +255,7 @@
                     <div class="card border shadow-none rounded-3 bg-light-subtle">
                         <div class="card-body p-3">
                             <span class="text-uppercase fw-bold text-muted small d-block mb-1" style="font-size:0.62rem; letter-spacing: 0.5px;">{{ __('Total Comm. Redeemed') }}</span>
-                            <h5 class="fw-bold text-dark mb-0">৳{{ number_format($totalCommissionEarned, 2) }}</h5>
+                            <h5 class="fw-bold text-dark mb-0">KSh {{ number_format($totalCommissionEarned, 2) }}</h5>
                         </div>
                     </div>
                 </div>
@@ -264,7 +264,7 @@
                     <div class="card border shadow-none rounded-3 bg-light-subtle">
                         <div class="card-body p-3">
                             <span class="text-uppercase fw-bold text-muted small d-block mb-1" style="font-size:0.62rem; letter-spacing: 0.5px;">{{ __('Total Comm. Upfront') }}</span>
-                            <h5 class="fw-bold text-dark mb-0">৳{{ number_format($totalUpfrontCommission, 2) }}</h5>
+                            <h5 class="fw-bold text-dark mb-0">KSh {{ number_format($totalUpfrontCommission, 2) }}</h5>
                         </div>
                     </div>
                 </div>
@@ -273,7 +273,7 @@
                     <div class="card border shadow-none rounded-3 bg-light-subtle">
                         <div class="card-body p-3">
                             <span class="text-uppercase fw-bold text-muted small d-block mb-1" style="font-size:0.62rem; letter-spacing: 0.5px;">{{ __('Total Comm. Paid Out') }}</span>
-                            <h5 class="fw-bold text-dark mb-0">৳{{ number_format($totalCommissionPaid, 2) }}</h5>
+                            <h5 class="fw-bold text-dark mb-0">KSh {{ number_format($totalCommissionPaid, 2) }}</h5>
                         </div>
                     </div>
                 </div>
@@ -282,7 +282,7 @@
                     <div class="card border shadow-none rounded-3 bg-light-subtle">
                         <div class="card-body p-3">
                             <span class="text-uppercase fw-bold text-muted small d-block mb-1" style="font-size:0.62rem; letter-spacing: 0.5px;">{{ __('Remaining Balance') }}</span>
-                            <h5 class="fw-bold text-success mb-0">৳{{ number_format($reseller->balance, 2) }}</h5>
+                            <h5 class="fw-bold text-success mb-0">KSh {{ number_format($reseller->balance, 2) }}</h5>
                         </div>
                     </div>
                 </div>
@@ -341,7 +341,7 @@
                                                 <span class="text-muted small">-</span>
                                             @endif
                                         </td>
-                                        <td class="text-end fw-bold">৳{{ number_format($trx->amount, 2) }}</td>
+                                        <td class="text-end fw-bold">KSh {{ number_format($trx->amount, 2) }}</td>
                                         <td class="text-center">
                                             <span class="badge {{ $trx->type === 'credit' ? 'bg-success-subtle text-success border border-success' : 'bg-danger-subtle text-danger border border-danger' }} px-2 py-1 text-uppercase" style="font-size: 0.72rem;">
                                                 {{ $trx->type }}

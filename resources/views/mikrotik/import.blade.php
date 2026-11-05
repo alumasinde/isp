@@ -114,7 +114,7 @@
                                     </tr>
                                     <tr>
                                         <td><code>payment_method</code> / <code>method</code></td>
-                                        <td>{{ __('e.g., Cash, Bkash, Nagad, Rocket, Bank (defaults to Cash)') }}</td>
+                                        <td>{{ __('e.g., Cash, M-Pesa, Bank (defaults to Cash)') }}</td>
                                         <td><span class="badge bg-secondary">{{ __('Optional') }}</span></td>
                                     </tr>
                                     <tr>

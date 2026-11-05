@@ -150,7 +150,7 @@
                                 <hr class="my-3 mx-n3 bg-200" />
                             </div>
                             <div class="col-4">
-                                <a class="d-block hover-bg-200 px-2 py-3 rounded-3 text-decoration-none" href="https://wa.me/8801840451881" target="_blank">
+                                <a class="d-block hover-bg-200 px-2 py-3 rounded-3 text-decoration-none" href="https://wa.me/254712345678" target="_blank">
                                     <img class="rounded" src="{{asset('images/nav-icons/whatapp.png')}}" alt="" width="40" height="40" />
                                     <p class="mb-0 fw-medium text-800 text-truncate fs-11 pt-1">Whatapp</p>
                                 </a>

@@ -35,7 +35,7 @@
     <!-- ===============================================-->
     <script>
         @php
-            $tz = config('app.timezone', 'Asia/Dhaka');
+            $tz = config('app.timezone', 'Africa/Nairobi');
             $phoneCountry = 'bd';
             if (class_exists('IntlTimeZone')) {
                 $region = \IntlTimeZone::getRegion($tz);

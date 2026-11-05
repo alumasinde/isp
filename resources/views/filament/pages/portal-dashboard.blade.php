@@ -136,7 +136,7 @@
 
                     @if($dueAmount > 0)
                         <a href="{{ route('filament.portal.pages.pay-bill') }}"
-                           title="Pay Bill — ৳{{ number_format($dueAmount, 2) }} Due"
+                           title="Pay Bill — KSh {{ number_format($dueAmount, 2) }} Due"
                            class="cp-relative cp-inline-flex cp-items-center cp-justify-center cp-w-11 cp-h-11 cp-bg-white cp-text-rose-600 cp-rounded-2xl cp-shadow-lg hover:cp-scale-110 cp-transition-all cp-duration-200 hover:cp-shadow-xl">
                             {{-- Credit-card icon --}}
                             <svg style="width: 22px; height: 22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
@@ -183,7 +183,7 @@
                     <div>
                         <span class="cp-text-gray-400 dark:cp-text-slate-400 cp-text-xs cp-font-bold cp-uppercase cp-tracking-wider cp-block">Monthly cost</span>
                         <span class="cp-text-xl cp-font-extrabold cp-text-gray-900 dark:cp-text-white cp-mt-1.5 cp-block">
-                            ৳ {{ number_format($billing->monthly_rent ?? 0, 2) }}
+                            KSh {{ number_format($billing->monthly_rent ?? 0, 2) }}
                         </span>
                         <span class="cp-inline-flex cp-items-center cp-gap-1 cp-mt-2 cp-px-2.5 cp-py-1 cp-bg-emerald-500/10 cp-text-emerald-600 dark:cp-text-emerald-400 cp-text-xs cp-font-bold cp-rounded-lg">
                             Billing: {{ ucfirst($billing->billing_type ?? 'Prepaid') }}
@@ -201,7 +201,7 @@
                     <div>
                         <span class="cp-text-gray-400 dark:cp-text-slate-400 cp-text-xs cp-font-bold cp-uppercase cp-tracking-wider cp-block">Current Due</span>
                         <span class="cp-text-xl cp-font-extrabold {{ $dueAmount > 0 ? 'cp-text-rose-500' : 'cp-text-emerald-500' }} cp-mt-1.5 cp-block">
-                            ৳ {{ number_format($dueAmount, 2) }}
+                            KSh {{ number_format($dueAmount, 2) }}
                         </span>
                         @if($dueAmount > 0)
                             <span class="cp-inline-flex cp-items-center cp-gap-1 cp-mt-2 cp-px-2.5 cp-py-1 cp-bg-rose-500/10 cp-text-rose-600 dark:cp-text-rose-400 cp-text-xs cp-font-bold cp-rounded-lg cp-animate-pulse">
@@ -340,7 +340,7 @@
                                                         {{ $payment->payment_method ?? 'Cash' }}
                                                     </span>
                                                 </td>
-                                                <td class="cp-py-3.5 cp-text-right cp-font-black cp-text-emerald-500">৳ {{ number_format($payment->collection_amount, 2) }}</td>
+                                                <td class="cp-py-3.5 cp-text-right cp-font-black cp-text-emerald-500">KSh {{ number_format($payment->collection_amount, 2) }}</td>
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -401,7 +401,7 @@
                                     </svg>
                                     <div>
                                         <span class="cp-font-black cp-block">Payment Outstanding!</span>
-                                        Please clear your outstanding balance of ৳{{ number_format($dueAmount, 2) }} to maintain uninterrupted service.
+                                        Please clear your outstanding balance of KSh {{ number_format($dueAmount, 2) }} to maintain uninterrupted service.
                                     </div>
                                 </div>
                             @else
@@ -455,32 +455,32 @@
                             <!-- Monthly Rent -->
                             <div class="cp-flex cp-justify-between cp-items-center">
                                 <span class="cp-text-sm cp-font-medium cp-text-gray-500 dark:cp-text-slate-400">Monthly Plan Rent</span>
-                                <span class="cp-text-sm cp-font-extrabold cp-text-gray-900 dark:cp-text-white">৳ {{ number_format($billing->monthly_rent ?? 0, 2) }}</span>
+                                <span class="cp-text-sm cp-font-extrabold cp-text-gray-900 dark:cp-text-white">KSh {{ number_format($billing->monthly_rent ?? 0, 2) }}</span>
                             </div>
 
                             <!-- Previous Due -->
                             <div class="cp-flex cp-justify-between cp-items-center">
                                 <span class="cp-text-sm cp-font-medium cp-text-gray-500 dark:cp-text-slate-400">Previous Outstanding Due</span>
-                                <span class="cp-text-sm cp-font-extrabold cp-text-gray-900 dark:cp-text-white">৳ {{ number_format($billing->previous_due ?? 0, 2) }}</span>
+                                <span class="cp-text-sm cp-font-extrabold cp-text-gray-900 dark:cp-text-white">KSh {{ number_format($billing->previous_due ?? 0, 2) }}</span>
                             </div>
 
                             <!-- Additional Charge -->
                             <div class="cp-flex cp-justify-between cp-items-center">
                                 <span class="cp-text-sm cp-font-medium cp-text-gray-500 dark:cp-text-slate-400">Additional Charges</span>
-                                <span class="cp-text-sm cp-font-extrabold cp-text-gray-900 dark:cp-text-white">৳ {{ number_format($billing->additional_charge ?? 0, 2) }}</span>
+                                <span class="cp-text-sm cp-font-extrabold cp-text-gray-900 dark:cp-text-white">KSh {{ number_format($billing->additional_charge ?? 0, 2) }}</span>
                             </div>
 
                             <!-- VAT -->
                             <div class="cp-flex cp-justify-between cp-items-center">
                                 <span class="cp-text-sm cp-font-medium cp-text-gray-500 dark:cp-text-slate-400">Government Tax / VAT</span>
-                                <span class="cp-text-sm cp-font-extrabold cp-text-gray-900 dark:cp-text-white">৳ {{ number_format($billing->vat ?? 0, 2) }}</span>
+                                <span class="cp-text-sm cp-font-extrabold cp-text-gray-900 dark:cp-text-white">KSh {{ number_format($billing->vat ?? 0, 2) }}</span>
                             </div>
 
                             <!-- Discount -->
                             @if(($billing->discount ?? 0) > 0)
                                 <div class="cp-flex cp-justify-between cp-items-center">
                                     <span class="cp-text-sm cp-font-medium cp-text-gray-500 dark:cp-text-slate-400">Discount Applied</span>
-                                    <span class="cp-text-sm cp-font-extrabold cp-text-emerald-500">- ৳ {{ number_format($billing->discount, 2) }}</span>
+                                    <span class="cp-text-sm cp-font-extrabold cp-text-emerald-500">- KSh {{ number_format($billing->discount, 2) }}</span>
                                 </div>
                             @endif
 
@@ -488,7 +488,7 @@
                             @if(($billing->advance ?? 0) > 0)
                                 <div class="cp-flex cp-justify-between cp-items-center">
                                     <span class="cp-text-sm cp-font-medium cp-text-gray-500 dark:cp-text-slate-400">Advance Balance</span>
-                                    <span class="cp-text-sm cp-font-extrabold cp-text-emerald-500">- ৳ {{ number_format($billing->advance, 2) }}</span>
+                                    <span class="cp-text-sm cp-font-extrabold cp-text-emerald-500">- KSh {{ number_format($billing->advance, 2) }}</span>
                                 </div>
                             @endif
 
@@ -498,7 +498,7 @@
                             <div class="cp-flex cp-justify-between cp-items-center cp-pt-1">
                                 <span class="cp-text-sm cp-font-black cp-text-gray-900 dark:cp-text-white">Net Balance Due</span>
                                 <span class="cp-text-base cp-font-black {{ $dueAmount > 0 ? 'cp-text-rose-500' : 'cp-text-emerald-500' }}">
-                                    ৳ {{ number_format($dueAmount, 2) }}
+                                    KSh {{ number_format($dueAmount, 2) }}
                                 </span>
                             </div>
                         </div>
@@ -516,8 +516,7 @@
                         {{ $existingReview ? 'Update Your Review' : 'We value your opinion!' }}
                     </h3>
                     <p class="cp-text-xs cp-text-gray-500 dark:cp-text-slate-400 cp-text-center cp-mb-4">
-                        আমাদের সেবার মান উন্নয়নে আপনার মতামত দিন।
-                    </p>
+                        Tell us how we are doing so we can improve your service.</p>
 
                     <form wire:submit.prevent="submitReview" class="cp-space-y-4">
                         {{-- Star Rating --}}

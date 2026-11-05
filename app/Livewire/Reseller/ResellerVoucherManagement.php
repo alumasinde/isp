@@ -100,7 +100,7 @@ class ResellerVoucherManagement extends Component
 
         $totalCost = (float)$this->count * $costPerVoucher;
         if ($reseller->balance < $totalCost) {
-            flash()->error('Insufficient wallet balance. You need BDT '.number_format($totalCost, 2).' but only have BDT '.number_format($reseller->balance, 2));
+            flash()->error('Insufficient wallet balance. You need KES '.number_format($totalCost, 2).' but only have KES '.number_format($reseller->balance, 2));
 
             return;
         }
@@ -111,7 +111,7 @@ class ResellerVoucherManagement extends Component
             $walletService->debit(
                 $reseller,
                 $totalCost,
-                "Generated {$this->count} vouchers valued at BDT ".number_format($voucherValue, 2).' each.',
+                "Generated {$this->count} vouchers valued at KES ".number_format($voucherValue, 2).' each.',
                 'voucher_generation'
             );
 
@@ -141,9 +141,9 @@ class ResellerVoucherManagement extends Component
             activity()
                 ->performedOn($reseller)
                 ->causedBy(auth()->user())
-                ->log("Generated {$generatedCount} vouchers valued at BDT ".number_format($voucherValue, 2).' each. Total cost BDT '.number_format($totalCost, 2).' debited from wallet.');
+                ->log("Generated {$generatedCount} vouchers valued at KES ".number_format($voucherValue, 2).' each. Total cost KES '.number_format($totalCost, 2).' debited from wallet.');
 
-            flash()->success("Successfully generated {$generatedCount} vouchers. BDT ".number_format($totalCost, 2).' was debited from your wallet.');
+            flash()->success("Successfully generated {$generatedCount} vouchers. KES ".number_format($totalCost, 2).' was debited from your wallet.');
         } catch (\Exception $e) {
             DB::rollBack();
             flash()->error('Failed to generate vouchers: '.$e->getMessage());
@@ -204,9 +204,9 @@ class ResellerVoucherManagement extends Component
             activity()
                 ->performedOn($voucher)
                 ->causedBy(auth()->user())
-                ->log("Cancelled reseller voucher {$voucher->code} valued at BDT ".number_format($voucher->value, 2).'. BDT '.number_format($voucher->value, 2).' refunded to wallet.');
+                ->log("Cancelled reseller voucher {$voucher->code} valued at KES ".number_format($voucher->value, 2).'. KES '.number_format($voucher->value, 2).' refunded to wallet.');
 
-            flash()->success("Successfully cancelled voucher {$voucher->code}. BDT ".number_format($voucher->value, 2).' has been refunded to your wallet.');
+            flash()->success("Successfully cancelled voucher {$voucher->code}. KES ".number_format($voucher->value, 2).' has been refunded to your wallet.');
         } catch (\Exception $e) {
             DB::rollBack();
             flash()->error('Failed to cancel voucher: '.$e->getMessage());

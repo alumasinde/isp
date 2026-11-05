@@ -117,7 +117,7 @@ class PaymentService
                 'customer_collection_unique_id' => $customer->customer_unique_id,
                 'collection_date' => Carbon::now(),
                 'collection_amount' => $amount,
-                'collected_by' => 'Online Payment ('.strtoupper($gateway).')',
+                'collected_by' => 'Online Payment ('.($gateway === 'mpesa' ? 'M-PESA' : strtoupper($gateway)).')',
                 'payment_type' => 'online',
                 'payment_method' => $gateway,
                 'transaction_id' => $trxId,

@@ -22,7 +22,7 @@
                             @forelse($assignedPackages as $pkg)
                                 <tr>
                                     <td class="fw-bold text-dark ps-3">{{ $pkg->package }}</td>
-                                    <td class="fw-semibold text-success">৳{{ number_format($pkg->price, 2) }}</td>
+                                    <td class="fw-semibold text-success">KSh {{ number_format($pkg->price, 2) }}</td>
                                     <td>{{ $pkg->speed ?? 'N/A' }}</td>
                                     <td><span class="badge bg-secondary-subtle text-secondary">{{ $pkg->router_name ?? __('Global') }}</span></td>
                                     <td class="text-muted small">{{ $pkg->description ?? 'N/A' }}</td>
@@ -60,7 +60,7 @@
                             @forelse($customPackages as $pkg)
                                 <tr>
                                     <td class="fw-bold text-dark ps-3">{{ $pkg->package }}</td>
-                                    <td class="fw-semibold text-success">৳{{ number_format($pkg->price, 2) }}</td>
+                                    <td class="fw-semibold text-success">KSh {{ number_format($pkg->price, 2) }}</td>
                                     <td>{{ $pkg->speed ?? 'N/A' }}</td>
                                     <td>{{ $pkg->plan_label ?? 'N/A' }}</td>
                                     <td>
@@ -109,7 +109,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label fw-bold">{{ __('Price (BDT)') }}</label>
+                        <label class="form-label fw-bold">{{ __('Price (KES)') }}</label>
                         <input type="number" step="0.01" wire:model="price" class="form-control" required placeholder="0.00">
                         @error('price') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                     </div>

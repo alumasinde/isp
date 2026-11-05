@@ -83,7 +83,7 @@
                                     </datalist>
                                 </div>
                                 <div class="col-md-6 col-12">
-                                    <label class="form-label fw-semibold text-dark small">{!! __('Monthly Price (৳) :info', ['info' => '<span class="text-danger">*</span>']) !!}</label>
+                                    <label class="form-label fw-semibold text-dark small">{!! __('Monthly Price (KSh) :info', ['info' => '<span class="text-danger">*</span>']) !!}</label>
                                     <input type="number" class="form-control form-control-sm shadow-xs" wire:model.defer="price" required style="border-radius: 6px;">
                                     @error('price') <span class="text-danger small">{{ $message }}</span> @enderror
                                 </div>
@@ -208,7 +208,7 @@
                                                 <span class="text-muted">—</span>
                                             @endif
                                         </td>
-                                        <td class="fw-semibold">{{ number_format($package['price'], 0) }}৳</td>
+                                        <td class="fw-semibold">{{ number_format($package['price'], 0) }}KSh </td>
                                         <td class="text-center">
                                             @if($package['show_on_site'])
                                                 <i class="bi bi-check-circle-fill text-success" title="{{ __('Visible') }}"></i>

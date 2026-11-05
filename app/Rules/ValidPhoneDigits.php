@@ -17,7 +17,7 @@ use libphonenumber\PhoneNumberType;
  *
  * - Validates format, length, and type (mobile / fixed-line-or-mobile)
  * - Derives the default country from APP_TIMEZONE via IntlTimeZone
- * - Accepts E.164 numbers stored without '+' (e.g. 8801840451881)
+ * - Accepts E.164 numbers stored without '+' (e.g. 254712345678)
  *
  * Usage: 'mobile' => ['nullable', 'string', new ValidPhoneDigits]
  */
@@ -36,7 +36,7 @@ class ValidPhoneDigits implements ValidationRule
     protected function resolveCountryIso(): string
     {
         try {
-            $tz = config('app.timezone', 'Asia/Dhaka');
+            $tz = config('app.timezone', 'Africa/Nairobi');
             if (class_exists('IntlTimeZone')) {
                 $region = \IntlTimeZone::getRegion($tz);
                 if ($region && strlen($region) === 2) {
@@ -47,7 +47,7 @@ class ValidPhoneDigits implements ValidationRule
             // fall through
         }
 
-        return 'BD'; // fallback
+        return 'KE'; // fallback
     }
 
     /**

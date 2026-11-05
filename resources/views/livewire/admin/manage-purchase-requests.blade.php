@@ -130,7 +130,7 @@
                                     <span class="badge bg-success-subtle text-success border border-success rounded-pill px-2 py-1" style="font-size: 0.75rem;">
                                         {{ $req->package_name }}
                                     </span>
-                                    <div class="fw-bold text-dark mt-1" style="font-size: 0.95rem;">৳{{ number_format($req->price, 0) }}</div>
+                                    <div class="fw-bold text-dark mt-1" style="font-size: 0.95rem;">KSh {{ number_format($req->price, 0) }}</div>
                                 </td>
                                 <td>
                                     <div class="text-muted" style="max-width: 250px; white-space: normal; line-height: 1.4; font-size: 0.8rem;">{{ $req->address }}</div>
@@ -241,7 +241,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label small fw-semibold text-muted mb-0">{{ __('Requested Package') }}</label>
-                                <div class="fw-bold text-dark fs-6"><span class="badge bg-success-subtle text-success border border-success">{{ $selectedRequest->package_name }}</span> (৳{{ number_format($selectedRequest->price, 0) }})</div>
+                                <div class="fw-bold text-dark fs-6"><span class="badge bg-success-subtle text-success border border-success">{{ $selectedRequest->package_name }}</span> (KSh {{ number_format($selectedRequest->price, 0) }})</div>
                             </div>
                             <div class="col-12">
                                 <label class="form-label small fw-semibold text-muted mb-0">{{ __('Installation Address') }}</label>

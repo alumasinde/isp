@@ -13,10 +13,7 @@ use App\Http\Controllers\CollectionReportController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\MainSiteController;
-use App\Http\Controllers\Payment\BkashPaymentController;
-use App\Http\Controllers\Payment\NagadPaymentController;
-use App\Http\Controllers\Payment\PayBridgePaymentController;
-use App\Http\Controllers\Payment\SslCommerzPaymentController;
+use App\Http\Controllers\Payment\MpesaPaymentController;
 use App\Http\Controllers\Portal\PortalVoucherController;
 use App\Http\Controllers\Reseller\ResellerDashboardController;
 use App\Livewire\AddressSetup;
@@ -73,7 +70,7 @@ Route::domain($baseDomain)->group(function () {
     Route::get('/', [MainSiteController::class, 'index'])->name('welcome');
     Route::get('/all-packages', [MainSiteController::class, 'allPackages'])->name('all-packages');
     Route::get('/lang/{locale}', function ($locale) {
-        if (in_array($locale, ['en', 'bn'])) {
+        if (in_array($locale, ['en'])) {
             session()->put('main_site_locale', $locale);
         }
         return redirect()->back();
@@ -255,36 +252,13 @@ Route::middleware([
 
 // portal domain routes
 Route::domain('portal.'.$baseDomain)->group(function () {
-    // Authenticated portal payment initiation routes
-    Route::middleware(['auth:ppp'])->group(function () {
-        Route::get('/payment/bkash/initiate', [BkashPaymentController::class, 'initiate'])->name('payment.bkash.initiate');
-        Route::get('/payment/nagad/initiate', [NagadPaymentController::class, 'initiate'])->name('payment.nagad.initiate');
-        Route::get('/payment/sslcommerz/initiate', [SslCommerzPaymentController::class, 'initiate'])->name('payment.sslcommerz.initiate');
-    });
-
-    // Public payment callback routes (Gateways redirect here, CSRF is disabled for POSTs)
-    Route::any('/payment/bkash/callback', [BkashPaymentController::class, 'callback'])->name('payment.bkash.callback');
-    Route::any('/payment/nagad/callback', [NagadPaymentController::class, 'callback'])->name('payment.nagad.callback');
-    Route::any('/payment/sslcommerz/callback', [SslCommerzPaymentController::class, 'callback'])->name('payment.sslcommerz.callback');
-    
-    // PayBridge standard callback endpoints
-    Route::any('/payment/{gateway}/callback', [PayBridgePaymentController::class, 'callback'])->name('payment.paybridge.callback');
-    Route::any('/payment/{gateway}/success', [PayBridgePaymentController::class, 'success'])->name('payment.success');
-    Route::any('/payment/{gateway}/fail', [PayBridgePaymentController::class, 'fail'])->name('payment.fail');
-    Route::any('/payment/{gateway}/cancel', [PayBridgePaymentController::class, 'cancel'])->name('payment.cancel');
-    Route::any('/payment/{gateway}/webhook', [PayBridgePaymentController::class, 'webhook'])->name('payment.webhook');
-    Route::post('/payment/mock/submit', [BkashPaymentController::class, 'mockSubmit'])->name('payment.mock.submit');
-
     // Public voucher redemption route
     Route::get('/recharge/voucher', [PortalVoucherController::class, 'showRechargeForm'])->name('portal.voucher.recharge');
     Route::post('/recharge/voucher', [PortalVoucherController::class, 'redeem'])->name('portal.voucher.redeem');
 });
 
-// Fallback universal PayBridge routes (for root host or IP redirects)
-Route::any('/payment/{gateway}/callback', [PayBridgePaymentController::class, 'callback'])->name('payment.paybridge.callback.fallback');
-Route::any('/payment/{gateway}/success', [PayBridgePaymentController::class, 'success'])->name('payment.success.fallback');
-Route::any('/payment/{gateway}/fail', [PayBridgePaymentController::class, 'fail'])->name('payment.fail.fallback');
-Route::any('/payment/{gateway}/cancel', [PayBridgePaymentController::class, 'cancel'])->name('payment.cancel.fallback');
-Route::any('/payment/{gateway}/webhook', [PayBridgePaymentController::class, 'webhook'])->name('payment.webhook.fallback');
-
-
+// Safaricom M-Pesa (Daraja) callbacks. Public and CSRF-exempt; MpesaService
+// verifies each result against the STK Query endpoint before crediting.
+Route::post('/payment/mpesa/callback', [MpesaPaymentController::class, 'callback'])->name('payment.mpesa.callback');
+Route::post('/payment/mpesa/c2b/validation', [MpesaPaymentController::class, 'c2bValidation'])->name('payment.mpesa.c2b.validation');
+Route::post('/payment/mpesa/c2b/confirmation', [MpesaPaymentController::class, 'c2bConfirmation'])->name('payment.mpesa.c2b.confirmation');

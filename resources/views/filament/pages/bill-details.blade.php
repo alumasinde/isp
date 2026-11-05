@@ -42,7 +42,7 @@
                 <div class="cp-rounded-3xl cp-p-5 cp-text-white cp-shadow-lg cp-flex cp-flex-col cp-gap-1
                     {{ $dueAmount > 0 ? 'cp-bg-gradient-to-br cp-from-rose-500 cp-to-red-600 cp-shadow-rose-500/20' : 'cp-bg-gradient-to-br cp-from-slate-500 cp-to-slate-600' }}">
                     <span class="cp-text-white/75 cp-text-xs cp-font-semibold cp-uppercase cp-tracking-wider">Outstanding Due</span>
-                    <span class="cp-text-3xl cp-font-black">৳{{ number_format($dueAmount, 2) }}</span>
+                    <span class="cp-text-3xl cp-font-black">KSh {{ number_format($dueAmount, 2) }}</span>
                     @if($dueAmount > 0)
                         <span class="cp-text-white/70 cp-text-xs">Please pay to avoid disconnection</span>
                     @else
@@ -52,7 +52,7 @@
 
                 <div class="cp-rounded-3xl cp-p-5 cp-text-white cp-shadow-lg cp-shadow-indigo-500/20 cp-flex cp-flex-col cp-gap-1 cp-bg-gradient-to-br cp-from-indigo-500 cp-to-indigo-600">
                     <span class="cp-text-white/75 cp-text-xs cp-font-semibold cp-uppercase cp-tracking-wider">Monthly Rent</span>
-                    <span class="cp-text-3xl cp-font-black">৳{{ number_format($billing->monthly_rent ?? 0, 2) }}</span>
+                    <span class="cp-text-3xl cp-font-black">KSh {{ number_format($billing->monthly_rent ?? 0, 2) }}</span>
                     <span class="cp-text-white/70 cp-text-xs">{{ $customer->pppUser?->profile ?? 'N/A' }}</span>
                 </div>
 
@@ -102,13 +102,13 @@
                                 <span class="cp-text-sm cp-text-gray-600 dark:cp-text-slate-400">{{ $row['label'] }}</span>
                                 <span class="cp-text-sm cp-font-bold
                                     {{ $row['type'] === 'credit' ? 'cp-text-emerald-500' : ($row['type'] === 'due' ? 'cp-text-rose-500' : 'cp-text-gray-900 dark:cp-text-white') }}">
-                                    {{ $row['type'] === 'credit' ? '-' : '+' }} ৳{{ number_format($row['value'], 2) }}
+                                    {{ $row['type'] === 'credit' ? '-' : '+' }} KSh {{ number_format($row['value'], 2) }}
                                 </span>
                             </div>
                         @endforeach
                         <div class="cp-flex cp-items-center cp-justify-between cp-px-6 cp-py-4 cp-bg-rose-50 dark:cp-bg-rose-500/5">
                             <span class="cp-text-sm cp-font-bold cp-text-rose-600 dark:cp-text-rose-400">Total Outstanding Due</span>
-                            <span class="cp-text-xl cp-font-black cp-text-rose-600 dark:cp-text-rose-400">৳{{ number_format($dueAmount, 2) }}</span>
+                            <span class="cp-text-xl cp-font-black cp-text-rose-600 dark:cp-text-rose-400">KSh {{ number_format($dueAmount, 2) }}</span>
                         </div>
                     </div>
                 </div>
@@ -160,7 +160,7 @@
                             <div class="cp-space-y-3">
                                 @php
                                     $lastRows = [
-                                        ['label' => 'Amount',       'value' => '৳'.number_format($lastPayment->collection_amount, 2)],
+                                        ['label' => 'Amount',       'value' => 'KSh '.number_format($lastPayment->collection_amount, 2)],
                                         ['label' => 'Date',         'value' => $lastPayment->collection_date ? \Carbon\Carbon::parse($lastPayment->collection_date)->format('d M, Y') : '—'],
                                         ['label' => 'Method',       'value' => ucfirst($lastPayment->payment_method ?? '—')],
                                         ['label' => 'Transaction',  'value' => $lastPayment->transaction_id ?? '—'],
@@ -184,7 +184,7 @@
                             <svg class="cp-w-5 cp-h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
                             </svg>
-                            Pay ৳{{ number_format($dueAmount, 2) }} Now
+                            Pay KSh {{ number_format($dueAmount, 2) }} Now
                         </a>
                     @endif
 

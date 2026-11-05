@@ -344,18 +344,7 @@
                                                         </div>
                                                     </div>
 
-                                                    {{-- Bangla Example --}}
-                                                    <div class="col-md-6">
-                                                        <div class="card border-0 bg-light bg-opacity-50 rounded-3 h-100" style="border: 1px solid #f1f5f9 !important;">
-                                                            <div class="card-body p-3">
-                                                                <h6 class="fw-bold text-dark mb-2"><i class="bi bi-translate text-success me-1"></i>{{ __('Bangla Example Preview') }}</h6>
-                                                                <div class="small text-muted p-2.5 bg-white rounded-3 border" style="min-height: 70px;">
-                                                                    {!! $smsTemp->template_ex_bn !!}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                                                                    </div>
                                             </div>
                                             <div class="modal-footer border-0 pt-0">
                                                 <button type="button" class="btn btn-secondary rounded-3" data-bs-dismiss="modal">{{ __('Cancel') }}</button>

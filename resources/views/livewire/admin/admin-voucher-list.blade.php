@@ -75,7 +75,7 @@
                                     <div class="fw-bold font-monospace text-dark" style="font-size: 0.85rem;">{{ $voucher->code }}</div>
                                 </td>
                                 <td>
-                                    <div class="fw-bold text-success">৳ {{ number_format($voucher->value, 2) }}</div>
+                                    <div class="fw-bold text-success">KSh {{ number_format($voucher->value, 2) }}</div>
                                 </td>
                                 <td class="small">
                                     @if($voucher->type === 'package_based')

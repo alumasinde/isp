@@ -425,7 +425,7 @@ class ResellerController extends Controller
                 activity()
                     ->performedOn($reseller)
                     ->causedBy(auth()->user())
-                    ->log("Adjusted reseller wallet: {$type} of BDT {$request->amount} - Reason: {$description}");
+                    ->log("Adjusted reseller wallet: {$type} of KES {$request->amount} - Reason: {$description}");
 
                 flash()->success('Wallet balance adjusted successfully.');
                 return redirect()->back();

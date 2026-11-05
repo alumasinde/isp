@@ -3,8 +3,11 @@
 namespace App\Filament\Pages;
 
 use App\Http\Controllers\MikrotikController;
+use App\Models\MpesaPayment;
+use App\Services\MpesaService;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PayBill extends Page
 {
@@ -24,9 +27,13 @@ class PayBill extends Page
 
     public $amount;
 
-    public $paymentMethod = 'bkash';
+    public $phone;
 
     public ?string $connectionStatus = 'checking...';
+
+    public ?int $pendingPaymentId = null;
+
+    public ?string $pendingMessage = null;
 
     public static function shouldRegisterNavigation(): bool
     {
@@ -54,25 +61,11 @@ class PayBill extends Page
             return;
         }
 
-        // Set amount to pay, defaulting to outstanding due amount if any, otherwise monthly rent
+        // Pay the outstanding balance by default, otherwise one month's rent.
         $due = (float) $this->billing->due_amount;
         $this->amount = $due > 0 ? $due : (float) $this->billing->monthly_rent;
 
-        // Set default payment method based on what's active in PayBridge or siteUrlSettings
-        $pbDefault = \PayBridge\Payment\Models\PaymentGatewaySetting::where('is_default', true)->where('is_active', true)->value('code');
-        $pbFirst = \PayBridge\Payment\Models\PaymentGatewaySetting::active()->value('code');
-
-        if ($pbDefault) {
-            $this->paymentMethod = $pbDefault;
-        } elseif ($pbFirst) {
-            $this->paymentMethod = $pbFirst;
-        } elseif (siteUrlSettings('payment_bkash_enabled')) {
-            $this->paymentMethod = 'bkash';
-        } elseif (siteUrlSettings('payment_nagad_enabled')) {
-            $this->paymentMethod = 'nagad';
-        } elseif (siteUrlSettings('payment_sslcommerz_enabled')) {
-            $this->paymentMethod = 'sslcommerz';
-        }
+        $this->phone = $this->customer->mobile;
 
         $this->connectionStatus = 'checking...';
     }
@@ -105,7 +98,7 @@ class PayBill extends Page
                 'ppp active print without-paging terse where name='.$ctrl->mtQuote($username),
                 ['name' => $username],
                 false,
-                true // bypassCache
+                true
             );
 
             if (is_array($activeSessions) && count($activeSessions) > 0 && is_array($activeSessions[0])) {
@@ -114,94 +107,125 @@ class PayBill extends Page
                 $this->connectionStatus = 'offline';
             }
         } catch (\Exception $e) {
-            \Log::warning("Failed to check live status for PPP User {$username} on router {$routerName}: ".$e->getMessage());
+            Log::warning("Failed to check live status for PPP User {$username} on router {$routerName}: ".$e->getMessage());
             $this->connectionStatus = 'unknown';
         }
     }
 
     public function pay()
     {
+        $this->resetErrorBag();
+
+        $max = (int) config('payment.drivers.mpesa.max_amount', 250000);
+
         $this->validate([
-            'amount' => 'required|numeric|min:1',
-            'paymentMethod' => 'required|string',
+            'amount' => ['required', 'numeric', 'min:1', 'max:'.$max],
+            'phone' => ['required', 'string', 'max:20'],
         ]);
 
-        // Check if chosen method is managed by PayBridge
-        $pbGateway = \PayBridge\Payment\Models\PaymentGatewaySetting::where('code', $this->paymentMethod)
-            ->where('is_active', true)
-            ->first();
+        $mpesa = app(MpesaService::class);
 
-        if ($pbGateway) {
-            $trxId = 'PB_' . $this->customer->id . '_' . time();
-            $callbackUrl = route('payment.paybridge.callback', ['gateway' => $this->paymentMethod]);
+        if (! $mpesa->isConfigured()) {
+            $this->addError('amount', 'M-Pesa is not configured yet. Please contact support.');
 
-            session([
-                'paybridge_customer_id' => $this->customer->id,
-                'paybridge_customer_unique_id' => $this->customer->customer_unique_id,
-                'paybridge_amount' => (float)$this->amount,
-                'paybridge_trx' => $trxId,
-                'paybridge_gateway' => $this->paymentMethod,
+            return;
+        }
+
+        $msisdn = $mpesa->normalizeMsisdn($this->phone);
+
+        if (! $msisdn) {
+            $this->addError('phone', 'Enter a valid Safaricom number, for example 0712 345 678.');
+
+            return;
+        }
+
+        try {
+            $amount = $mpesa->payableAmount((float) $this->amount);
+
+            $payment = MpesaPayment::create([
+                'customer_unique_id' => $this->customer->customer_unique_id,
+                'purpose' => 'bill',
+                'phone' => $msisdn,
+                'amount' => $amount,
+                'currency' => config('payment.currency', 'KES'),
+                'account_reference' => $mpesa->accountReference($this->customer),
+                'status' => MpesaPayment::STATUS_PENDING,
             ]);
 
-            $payload = [
-                'amount'         => (float) $this->amount,
-                'transaction_id' => $trxId,
-                'currency'       => 'BDT',
-                'payer_reference'=> $this->customer->customer_unique_id,
-                'customer_name'  => $this->customer->customer_name ?: 'Customer',
-                'customer_email' => $this->customer->email ?: 'customer@isp.local',
-                'customer_phone' => $this->customer->mobile ?: '01700000000',
-                'callback_url'   => $callbackUrl,
-                'success_url'    => $callbackUrl,
-                'fail_url'       => $callbackUrl,
-                'cancel_url'     => $callbackUrl,
-            ];
+            $response = $mpesa->stkPush(
+                $msisdn,
+                $amount,
+                $mpesa->accountReference($this->customer),
+                'Internet'
+            );
 
-            try {
-                $response = \PayBridge\Payment\Facades\PayBridge::driver($this->paymentMethod)->pay($payload);
+            $payment->update([
+                'merchant_request_id' => $response['MerchantRequestID'] ?? null,
+                'checkout_request_id' => $response['CheckoutRequestID'] ?? null,
+                'raw_response' => $response,
+            ]);
 
-                if (! empty($response['success']) && ! empty($response['redirect_url'])) {
-                    return redirect()->away($response['redirect_url']);
-                }
+            $this->pendingPaymentId = $payment->id;
+            $this->pendingMessage = 'An M-Pesa prompt was sent to '.$msisdn.'. Enter your M-Pesa PIN to complete the payment.';
+            $this->amount = $amount;
+        } catch (\Throwable $e) {
+            Log::error('M-Pesa STK push failed: '.$e->getMessage());
+            $this->addError('amount', $e->getMessage());
+        }
+    }
 
-                // Bangla QR: show QR code inline instead of redirect
-                if (! empty($response['success']) && $this->paymentMethod === 'bangla_qr' && ! empty($response['qr_image_url'])) {
-                    session([
-                        'bangla_qr_image'  => $response['qr_image_url'],
-                        'bangla_qr_trx'    => $response['transaction_id'] ?? $trxId,
-                        'bangla_qr_amount' => (float) $this->amount,
-                    ]);
-                    return redirect()->route('filament.portal.pages.pay-bill')
-                        ->with('bangla_qr', true);
-                }
-
-                $errorMsg = $response['message'] ?? 'Unable to initiate payment with ' . $pbGateway->name;
-                session()->flash('error', $errorMsg);
-                return;
-            } catch (\Throwable $e) {
-                \Illuminate\Support\Facades\Log::error("PayBridge initiation failed for [{$this->paymentMethod}]: " . $e->getMessage());
-                session()->flash('error', 'Payment gateway error: ' . $e->getMessage());
-                return;
-            }
+    /**
+     * Polled by the portal while the customer approves the STK prompt.
+     */
+    public function pollStatus()
+    {
+        if (! $this->pendingPaymentId || ! $this->customer) {
+            return;
         }
 
-        // Fallback to legacy routes if legacy code is used
-        $routeParams = ['amount' => $this->amount];
-        $host = request()->getHost();
-        $isLocal = str_ends_with($host, '.test') || str_ends_with($host, '.local') || $host === 'localhost' || $host === '127.0.0.1';
+        $payment = MpesaPayment::whereKey($this->pendingPaymentId)
+            ->where('customer_unique_id', $this->customer->customer_unique_id)
+            ->first();
 
-        if ($isLocal) {
-            $routeParams['mock'] = 'true';
+        if (! $payment) {
+            $this->pendingPaymentId = null;
+
+            return;
         }
 
-        if ($this->paymentMethod === 'bkash') {
-            return redirect()->route('payment.bkash.initiate', $routeParams);
-        } elseif ($this->paymentMethod === 'nagad') {
-            return redirect()->route('payment.nagad.initiate', $routeParams);
-        } elseif ($this->paymentMethod === 'sslcommerz') {
-            return redirect()->route('payment.sslcommerz.initiate', $routeParams);
+        // Safaricom gives up after ~60 seconds; do not leave the portal spinning.
+        $expiry = (int) config('payment.drivers.mpesa.timeout', 60) + 30;
+        if ($payment->isPending() && $payment->created_at?->lt(now()->subSeconds($expiry))) {
+            $payment->update([
+                'status' => MpesaPayment::STATUS_FAILED,
+                'result_desc' => 'No M-Pesa confirmation was received before the request expired.',
+            ]);
         }
 
-        session()->flash('error', 'Selected payment gateway is currently unavailable.');
+        if ($payment->isCompleted()) {
+            session()->flash('success', 'Payment received. M-Pesa receipt: '.$payment->mpesa_receipt.'. Your account has been updated.');
+
+            $this->pendingPaymentId = null;
+            $this->pendingMessage = null;
+
+            $this->customer = $this->customer->fresh();
+            $this->billing = $this->customer?->billing;
+            $this->amount = (float) ($this->billing?->due_amount ?? 0) ?: (float) ($this->billing?->monthly_rent ?? 0);
+
+            return;
+        }
+
+        if (in_array($payment->status, [MpesaPayment::STATUS_FAILED, MpesaPayment::STATUS_CANCELLED], true)) {
+            session()->flash('error', app(MpesaService::class)->failureMessage($payment->result_code, $payment->result_desc));
+
+            $this->pendingPaymentId = null;
+            $this->pendingMessage = null;
+        }
+    }
+
+    public function cancelPending()
+    {
+        $this->pendingPaymentId = null;
+        $this->pendingMessage = null;
     }
 }

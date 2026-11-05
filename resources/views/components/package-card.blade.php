@@ -70,7 +70,7 @@
     </div>
 
     <div class="price mb-20">
-        <h2><span class="price-amount">{{ number_format($package->price) }}৳</span> <span>/MONTH</span></h2>
+        <h2><span class="price-amount">{{ number_format($package->price) }}KSh </span> <span>/MONTH</span></h2>
     </div>
 
     <div class="pricing-btn mt-auto">

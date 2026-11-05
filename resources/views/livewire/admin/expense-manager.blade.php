@@ -58,7 +58,7 @@
                                     <span class="badge rounded-pill px-3 py-2 small fw-semibold
                                         {{ $c !== 'purple' ? "bg-{$c}-subtle text-{$c} border border-{$c}-subtle" : '' }}"
                                         style="{{ $style }}">
-                                        {{ __($label) }}: ৳{{ number_format($totals[$key], 2) }}
+                                        {{ __($label) }}: KSh {{ number_format($totals[$key], 2) }}
                                     </span>
                                 @endif
                             @endforeach
@@ -75,7 +75,7 @@
             <i class="bi bi-exclamation-circle-fill text-danger fs-5 me-3"></i>
             <div>
                 <span class="fw-semibold text-dark">{{ __('Total Expenses (current filter):') }}</span>
-                <span class="fw-bold text-danger fs-5 ms-2">৳{{ number_format($grandTotal, 2) }}</span>
+                <span class="fw-bold text-danger fs-5 ms-2">KSh {{ number_format($grandTotal, 2) }}</span>
             </div>
         </div>
         @endif
@@ -132,7 +132,7 @@
                                 </td>
                                 <td class="text-muted small">{{ $expense->reference_no ?? '—' }}</td>
                                 <td class="small text-muted">{{ $expense->addedBy?->name ?? '—' }}</td>
-                                <td class="text-end fw-bold text-danger">৳{{ number_format($expense->amount, 2) }}</td>
+                                <td class="text-end fw-bold text-danger">KSh {{ number_format($expense->amount, 2) }}</td>
                                 <td class="text-end pe-4">
                                     <button wire:click="triggerPrint({{ $expense->id }})"
                                         class="btn btn-sm btn-outline-success rounded-3 me-1 py-1 px-2" title="{{ __('Print Voucher') }}">
@@ -279,7 +279,7 @@
                                     <option value="{{ $r->id }}">
                                         {{ $r->user?->name ?? 'Reseller #'.$r->id }}
                                         @if($r->company) ({{ $r->company }})@endif
-                                        — {{ __('Balance:') }} ৳{{ number_format($r->balance, 2) }}
+                                        — {{ __('Balance:') }} KSh {{ number_format($r->balance, 2) }}
                                     </option>
                                 @endforeach
                             </select>
@@ -291,14 +291,14 @@
                                 @if($selReseller && $amount && (float)$amount > (float)$selReseller->balance)
                                 <div class="alert alert-warning rounded-3 py-2 px-3 small mt-2 mb-0">
                                     <i class="bi bi-exclamation-triangle-fill me-1"></i>
-                                    {!! __('Amount <strong>৳:amount</strong> exceeds reseller balance <strong>৳:balance</strong>. Save will fail.', ['amount' => number_format((float)$amount, 2), 'balance' => number_format($selReseller->balance, 2)]) !!}
+                                    {!! __('Amount <strong>KSh :amount</strong> exceeds reseller balance <strong>KSh :balance</strong>. Save will fail.', ['amount' => number_format((float)$amount, 2), 'balance' => number_format($selReseller->balance, 2)]) !!}
                                 </div>
                                 @elseif($selReseller)
                                 <div class="text-muted small mt-1">
                                     <i class="bi bi-wallet2 me-1"></i>
-                                    {{ __('Current wallet balance:') }} <strong class="text-success">৳{{ number_format($selReseller->balance, 2) }}</strong>
+                                    {{ __('Current wallet balance:') }} <strong class="text-success">KSh {{ number_format($selReseller->balance, 2) }}</strong>
                                     @if($amount)
-                                        → {{ __('After payout:') }} <strong class="text-danger">৳{{ number_format(max(0,(float)$selReseller->balance - (float)$amount), 2) }}</strong>
+                                        → {{ __('After payout:') }} <strong class="text-danger">KSh {{ number_format(max(0,(float)$selReseller->balance - (float)$amount), 2) }}</strong>
                                     @endif
                                 </div>
                                 @endif
@@ -316,7 +316,7 @@
 
                         {{-- Amount --}}
                         <div class="col-md-4">
-                            <label class="form-label small fw-semibold">{{ __('Amount') }} (৳) <span class="text-danger">*</span></label>
+                            <label class="form-label small fw-semibold">{{ __('Amount') }} (KSh) <span class="text-danger">*</span></label>
                             <input wire:model.live="amount" type="number" step="0.01" min="0" placeholder="0.00"
                                 class="form-control rounded-3 @error('amount') is-invalid @enderror">
                             @error('amount')<div class="invalid-feedback">{{ $message }}</div>@enderror

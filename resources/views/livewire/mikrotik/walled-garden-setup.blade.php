@@ -3,7 +3,7 @@
         <div class="card md:min-h-[82vh]">
             <div class="card-header pb-0 px-3">
                 <h6 class="mb-0">{{ __('Walled Garden / Permitted URLs') }}</h6>
-                <p class="text-sm text-muted mb-0">{{ __('Manage URLs or IPs (like bKash, IPay, Nagad) that users can access even when expired.') }}</p>
+                <p class="text-sm text-muted mb-0">{{ __('Manage URLs or IPs (like M-Pesa, Safaricom) that users can access even when expired.') }}</p>
             </div>
             <div class="card-body pt-4 p-3">
                 <div class="row">
@@ -30,13 +30,13 @@
 
                         <div class="form-group mb-3">
                             <label for="url_or_ip" class="form-control-label">{{ __('URL or IP Address') }}</label>
-                            <input type="text" class="form-control" id="url_or_ip" wire:model="url_or_ip" placeholder="{{ __('e.g. bkash.com or 192.168.1.10') }}">
+                            <input type="text" class="form-control" id="url_or_ip" wire:model="url_or_ip" placeholder="{{ __('e.g. safaricom.co.ke or 192.168.1.10') }}">
                             @error('url_or_ip') <span class="text-danger text-xs">{{ $message }}</span> @enderror
                         </div>
 
                         <div class="form-group mb-3">
                             <label for="comment" class="form-control-label">{{ __('Comment (Optional)') }}</label>
-                            <input type="text" class="form-control" id="comment" wire:model="comment" placeholder="{{ __('e.g. bKash payment gateway') }}">
+                            <input type="text" class="form-control" id="comment" wire:model="comment" placeholder="{{ __('e.g. M-Pesa payment gateway') }}">
                             @error('comment') <span class="text-danger text-xs">{{ $message }}</span> @enderror
                         </div>
 
@@ -182,7 +182,7 @@
                         @else
                         <li>{!! __('Configures MikroTik Web Proxy and redirects all HTTP traffic from :list to :target.', ['list' => '<strong>EXPIRED_USERS</strong>', 'target' => '<strong>http://' . e($redirection_domain ?: __(' [Set Domain above]')) . '/warning</strong>']) !!}</li>
                         @endif
-                        <li>{!! __('Automatically bypasses the :urls (bKash, etc.) defined above.', ['urls' => '<strong>' . __('Permitted URLs') . '</strong>']) !!}</li>
+                        <li>{!! __('Automatically bypasses the :urls (M-Pesa, etc.) defined above.', ['urls' => '<strong>' . __('Permitted URLs') . '</strong>']) !!}</li>
                     </ul>
                 </div>
             </div>

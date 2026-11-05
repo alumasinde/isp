@@ -401,7 +401,7 @@
 								</ul>
 							</div>
 							<div class="price mb-20">
-								<h2>500৳ <span>/{{ __('MONTH') }}</span>
+								<h2>500KSh <span>/{{ __('MONTH') }}</span>
 								</h2>
 							</div>
 							<div class="pricing-btn">
@@ -431,7 +431,7 @@
 							</ul>
 							</div>
 							<div class="price mb-20">
-							<h2>650৳ <span>/{{ __('MONTH') }}</span>
+							<h2>650KSh <span>/{{ __('MONTH') }}</span>
 							</h2>
 							</div>
 							<div class="pricing-btn">
@@ -461,7 +461,7 @@
 							</ul>
 							</div>
 							<div class="price mb-20">
-							<h2>800৳ <span>/{{ __('MONTH') }}</span>
+							<h2>800KSh <span>/{{ __('MONTH') }}</span>
 							</h2>
 							</div>
 							<div class="pricing-btn">
@@ -491,7 +491,7 @@
 							</ul>
 							</div>
 							<div class="price mb-20">
-							<h2>1000৳ <span>/{{ __('MONTH') }}</span>
+							<h2>1000KSh <span>/{{ __('MONTH') }}</span>
 							</h2>
 							</div>
 							<div class="pricing-btn">

@@ -7,7 +7,7 @@
                 <div class="card-body p-4 d-flex flex-column justify-content-between">
                     <div>
                         <span class="text-uppercase fw-bold text-white-50 small d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.8px;">{{ __('Wallet Balance (Remaining)') }}</span>
-                        <h3 class="fw-bold mb-1">৳{{ number_format($reseller->balance, 2) }}</h3>
+                        <h3 class="fw-bold mb-1">KSh {{ number_format($reseller->balance, 2) }}</h3>
                     </div>
                     <div class="mt-2 text-white-50 small" style="font-size: 0.72rem;">
                         {{ __('Reseller ID: #:id', ['id' => $reseller->id]) }}
@@ -21,7 +21,7 @@
                 <div class="card-body p-4 d-flex flex-column justify-content-between">
                     <div>
                         <span class="text-uppercase fw-bold text-muted small d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.8px;">{{ __('Total Comm. Earned (Redeemed)') }}</span>
-                        <h3 class="fw-bold text-dark mb-1">৳{{ number_format($totalCommissionEarned, 2) }}</h3>
+                        <h3 class="fw-bold text-dark mb-1">KSh {{ number_format($totalCommissionEarned, 2) }}</h3>
                     </div>
                     <div class="mt-2 text-muted small" style="font-size: 0.72rem;">
                         {{ __('Credited to Wallet balance') }}
@@ -35,7 +35,7 @@
                 <div class="card-body p-4 d-flex flex-column justify-content-between">
                     <div>
                         <span class="text-uppercase fw-bold text-muted small d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.8px;">{{ __('Total Comm. Upfront') }}</span>
-                        <h3 class="fw-bold text-dark mb-1">৳{{ number_format($totalUpfrontCommission, 2) }}</h3>
+                        <h3 class="fw-bold text-dark mb-1">KSh {{ number_format($totalUpfrontCommission, 2) }}</h3>
                     </div>
                     <div class="mt-2 text-muted small" style="font-size: 0.72rem;">
                         {{ __('Retained as discount upfront') }}
@@ -49,7 +49,7 @@
                 <div class="card-body p-4 d-flex flex-column justify-content-between">
                     <div>
                         <span class="text-uppercase fw-bold text-muted small d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.8px;">{{ __('Total Paid Out (Cash)') }}</span>
-                        <h3 class="fw-bold text-dark mb-1">৳{{ number_format($totalCommissionPaid, 2) }}</h3>
+                        <h3 class="fw-bold text-dark mb-1">KSh {{ number_format($totalCommissionPaid, 2) }}</h3>
                     </div>
                     <div class="mt-2 text-muted small" style="font-size: 0.72rem;">
                         {{ __('Withdrawn in cash from admin') }}
@@ -98,7 +98,7 @@
                                                 <span class="text-muted small">-</span>
                                             @endif
                                         </td>
-                                        <td class="text-end fw-bold">৳{{ number_format($trx->amount, 2) }}</td>
+                                        <td class="text-end fw-bold">KSh {{ number_format($trx->amount, 2) }}</td>
                                         <td class="text-center">
                                             <span class="badge {{ $trx->type === 'credit' ? 'bg-success-subtle text-success' : 'bg-danger-subtle text-danger' }} px-2.5 py-1 text-uppercase text-xs" style="font-size: 0.7rem;">
                                                 {{ __($trx->type) }}

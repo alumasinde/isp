@@ -22,7 +22,7 @@ class PackagePurchaseRequestTest extends TestCase
             ->assertSet('price', 1200)
             ->assertSet('showModal', true)
             ->set('name', 'John Doe')
-            ->set('phone', '01711122233')
+            ->set('phone', '254711122233')
             ->set('email', 'john@example.com')
             ->set('address', 'House 12, Road 5, Sector 3, Uttara, Dhaka')
             ->set('notes', 'Please install as soon as possible.')
@@ -32,7 +32,7 @@ class PackagePurchaseRequestTest extends TestCase
 
         $this->assertDatabaseHas('package_purchase_requests', [
             'name' => 'John Doe',
-            'phone' => '01711122233',
+            'phone' => '254711122233',
             'email' => 'john@example.com',
             'package_name' => 'Super Broadband 50 Mbps',
             'price' => 1200,

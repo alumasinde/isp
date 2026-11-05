@@ -26,12 +26,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
         ]);
         $middleware->validateCsrfTokens(except: [
-            '/payment/bkash/callback',
-            '/payment/nagad/callback',
-            '/payment/sslcommerz/callback',
-            '/payment/mock/submit',
-            '/payment/*/callback',
-            '/payment/paybridge/*',
+            '/payment/mpesa/callback',
+            '/payment/mpesa/c2b/validation',
+            '/payment/mpesa/c2b/confirmation',
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

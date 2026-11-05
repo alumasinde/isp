@@ -37,9 +37,9 @@
                 <div class="card-body p-3 d-flex align-items-center justify-content-between" style="min-height: 95px;">
                     <div>
                         <span class="text-uppercase fw-bold text-muted d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.8px;">{{ __('Total Revenue') }}</span>
-                        <h4 class="fw-extrabold text-dark mb-1" style="font-family: 'Outfit', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 1.4rem;">৳{{ number_format($totalRevenue, 2) }}</h4>
+                        <h4 class="fw-extrabold text-dark mb-1" style="font-family: 'Outfit', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 1.4rem;">KSh {{ number_format($totalRevenue, 2) }}</h4>
                         <span class="text-muted d-block" style="font-size: 0.65rem; line-height: 1.2;">
-                            {{ __('ISP') }}: ৳{{ number_format($collectionRevenue, 2) }} &middot; {{ __('Hotspot') }}: ৳{{ number_format($hotspotRevenue, 2) }}
+                            {{ __('ISP') }}: KSh {{ number_format($collectionRevenue, 2) }} &middot; {{ __('Hotspot') }}: KSh {{ number_format($hotspotRevenue, 2) }}
                         </span>
                     </div>
                     <div class="rounded-3 p-2.5 d-flex align-items-center justify-content-center shadow-sm" style="background: rgba(16, 185, 129, 0.1); color: #059669; width: 40px; height: 40px;">
@@ -55,7 +55,7 @@
                 <div class="card-body p-3 d-flex align-items-center justify-content-between" style="min-height: 95px;">
                     <div>
                         <span class="text-uppercase fw-bold text-muted d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.8px;">{{ __('Commissions') }}</span>
-                        <h4 class="fw-extrabold text-dark mb-1" style="font-family: 'Outfit', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 1.4rem;">৳{{ number_format($resellerCommissions, 2) }}</h4>
+                        <h4 class="fw-extrabold text-dark mb-1" style="font-family: 'Outfit', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 1.4rem;">KSh {{ number_format($resellerCommissions, 2) }}</h4>
                         <span class="text-muted d-block" style="font-size: 0.65rem; line-height: 1.2;">{{ __('Reseller Commissions') }}</span>
                     </div>
                     <div class="rounded-3 p-2.5 d-flex align-items-center justify-content-center shadow-sm" style="background: rgba(245, 158, 11, 0.1); color: #d97706; width: 40px; height: 40px;">
@@ -71,7 +71,7 @@
                 <div class="card-body p-3 d-flex align-items-center justify-content-between" style="min-height: 95px;">
                     <div>
                         <span class="text-uppercase fw-bold text-muted d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.8px;">{{ __('Expenses') }}</span>
-                        <h4 class="fw-extrabold text-dark mb-1" style="font-family: 'Outfit', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 1.4rem;">৳{{ number_format($totalExpenses, 2) }}</h4>
+                        <h4 class="fw-extrabold text-dark mb-1" style="font-family: 'Outfit', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 1.4rem;">KSh {{ number_format($totalExpenses, 2) }}</h4>
                         <span class="text-muted d-block" style="font-size: 0.65rem; line-height: 1.2;">
                             {{ trans_choice('{1} :count category|[2,*] :count categories', $expensesByCategory->count(), ['count' => $expensesByCategory->count()]) }}
                         </span>
@@ -92,7 +92,7 @@
                     <div>
                         <span class="text-uppercase fw-bold text-muted d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.8px;">{{ __('Net :type', ['type' => $isProfitable ? __('Profit') : __('Loss')]) }}</span>
                         <h4 class="fw-extrabold mb-1" style="font-family: 'Outfit', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 1.4rem; color: {{ $isProfitable ? '#0369a1' : '#be185d' }};">
-                            {{ $isProfitable ? '' : '-' }}৳{{ number_format(abs($netProfit), 2) }}
+                            {{ $isProfitable ? '' : '-' }}KSh {{ number_format(abs($netProfit), 2) }}
                         </h4>
                         <span class="text-muted d-block" style="font-size: 0.65rem; line-height: 1.2;">{{ __('After all costs') }}</span>
                     </div>
@@ -118,15 +118,15 @@
                     {{-- Revenue rows --}}
                     <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
                         <span class="small text-muted">{{ __('ISP Collections') }}</span>
-                        <span class="fw-semibold text-success">+ ৳{{ number_format($collectionRevenue, 2) }}</span>
+                        <span class="fw-semibold text-success">+ KSh {{ number_format($collectionRevenue, 2) }}</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
                         <span class="small text-muted">{{ __('Hotspot Sales') }}</span>
-                        <span class="fw-semibold text-success">+ ৳{{ number_format($hotspotRevenue, 2) }}</span>
+                        <span class="fw-semibold text-success">+ KSh {{ number_format($hotspotRevenue, 2) }}</span>
                     </div>
                     <div class="d-flex justify-content-between align-items-center py-2 border-bottom bg-success-subtle rounded-3 px-2">
                         <span class="small fw-bold">Total Revenue</span>
-                        <span class="fw-bold text-success">৳{{ number_format($totalRevenue, 2) }}</span>
+                        <span class="fw-bold text-success">KSh {{ number_format($totalRevenue, 2) }}</span>
                     </div>
 
                     <div class="mt-3 mb-1 text-muted" style="font-size:.7rem; letter-spacing:.06em;">{{ __('COSTS & EXPENSES') }}</div>
@@ -136,7 +136,7 @@
                         <span class="small text-muted">
                             <i class="bi bi-person-fill-gear text-warning me-1"></i>{{ __('Reseller Commissions') }}
                         </span>
-                        <span class="fw-semibold text-danger">− ৳{{ number_format($resellerCommissions, 2) }}</span>
+                        <span class="fw-semibold text-danger">− KSh {{ number_format($resellerCommissions, 2) }}</span>
                     </div>
 
                     {{-- Expense category rows --}}
@@ -149,14 +149,14 @@
                         <span class="small text-muted">
                             <i class="bi bi-{{ $catIcons[$key] ?? 'circle' }} text-{{ $catColors[$key] ?? 'secondary' }} me-1"></i>{{ __($label) }}
                         </span>
-                        <span class="fw-semibold text-danger">− ৳{{ number_format($expensesByCategory[$key] ?? 0, 2) }}</span>
+                        <span class="fw-semibold text-danger">− KSh {{ number_format($expensesByCategory[$key] ?? 0, 2) }}</span>
                     </div>
                     @endforeach
 
                     {{-- Total costs --}}
                     <div class="d-flex justify-content-between align-items-center py-2 border-bottom bg-danger-subtle rounded-3 px-2 mt-1">
                         <span class="small fw-bold">{{ __('Total Costs') }}</span>
-                        <span class="fw-bold text-danger">৳{{ number_format($resellerCommissions + $totalExpenses, 2) }}</span>
+                        <span class="fw-bold text-danger">KSh {{ number_format($resellerCommissions + $totalExpenses, 2) }}</span>
                     </div>
 
                     {{-- Net profit --}}
@@ -164,7 +164,7 @@
                          style="background:{{ $isProfitable ? 'linear-gradient(135deg,#e0f2fe,#bae6fd)' : 'linear-gradient(135deg,#fce7f3,#fbcfe8)' }};">
                         <span class="fw-bold">{{ __('Net :type', ['type' => $isProfitable ? __('Profit') : __('Loss')]) }}</span>
                         <span class="fw-bold fs-5" style="color:{{ $isProfitable ? '#0369a1' : '#be185d' }};">
-                            {{ $isProfitable ? '' : '-' }}৳{{ number_format(abs($netProfit), 2) }}
+                            {{ $isProfitable ? '' : '-' }}KSh {{ number_format(abs($netProfit), 2) }}
                         </span>
                     </div>
                 </div>
@@ -190,7 +190,7 @@
                                     {{ ['item_purchase'=>'#3b82f6','raw_bill'=>'#f59e0b','employee_salary'=>'#06b6d4','miscellaneous'=>'#94a3b8'][$key] ?? '#ccc' }};"></span>
                                 <span class="small text-muted">{{ __($label) }}</span>
                             </div>
-                            <span class="small fw-semibold">৳{{ number_format($amount, 2) }}</span>
+                            <span class="small fw-semibold">KSh {{ number_format($amount, 2) }}</span>
                         </div>
                         @endif
                         @endforeach
@@ -257,7 +257,7 @@
                                                 @endif
                                             </td>
                                             <td class="small text-muted py-2 border-bottom-0">{{ $item->reference_no ?? '-' }}</td>
-                                            <td class="small fw-bold text-dark text-end py-2 border-bottom-0">৳{{ number_format($item->amount, 2) }}</td>
+                                            <td class="small fw-bold text-dark text-end py-2 border-bottom-0">KSh {{ number_format($item->amount, 2) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -310,7 +310,7 @@
                                                 @endif
                                             </td>
                                             <td class="small text-muted py-2 border-bottom-0">{{ $bill->reference_no ?? '-' }}</td>
-                                            <td class="small fw-bold text-dark text-end py-2 border-bottom-0">৳{{ number_format($bill->amount, 2) }}</td>
+                                            <td class="small fw-bold text-dark text-end py-2 border-bottom-0">KSh {{ number_format($bill->amount, 2) }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -405,7 +405,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 scales: {
                     y: {
                         grid: { color: '#f1f5f9' },
-                        ticks: { callback: v => '৳' + v.toLocaleString(), font: { size: 11 } }
+                        ticks: { callback: v => 'KSh ' + v.toLocaleString(), font: { size: 11 } }
                     },
                     x: { grid: { display: false }, ticks: { font: { size: 10 } } }
                 }

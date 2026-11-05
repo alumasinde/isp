@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Schedule;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
-$timezone = config('app.timezone') ?: 'Asia/Dhaka';
+$timezone = config('app.timezone') ?: 'Africa/Nairobi';
 
 Schedule::call(function () {
     app(ScheduledTasksController::class)->createMonthlyBill();

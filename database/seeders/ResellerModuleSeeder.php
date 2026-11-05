@@ -24,7 +24,7 @@ class ResellerModuleSeeder extends Seeder
             $user = User::create([
                 'name' => 'Test Reseller',
                 'email' => 'reseller@isp.com',
-                'mobile' => '01711122233',
+                'mobile' => '254711122233',
                 'password' => bcrypt('password'),
             ]);
         }
@@ -43,7 +43,7 @@ class ResellerModuleSeeder extends Seeder
                 'commission_percentage' => 15.00, // 15% commission
                 'balance' => 5000.00, // Initial wallet balance
                 'status' => 'active',
-                'phone' => '01711122233',
+                'phone' => '254711122233',
             ]);
         }
 

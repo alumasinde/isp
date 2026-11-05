@@ -476,7 +476,7 @@
 
                             {{-- ── CATEGORY 2: BILLING & COMMERCE ── --}}
                             <div class="nav-category-header mt-2"
-                                x-show="!searchQuery || 'billing invoice payment gateway bkash nagad sslcommerz'.includes(searchQuery.toLowerCase())">
+                                x-show="!searchQuery || 'billing invoice payment mpesa safaricom daraja'.includes(searchQuery.toLowerCase())">
                                 <i class="bi bi-cash-stack text-success"></i> {{ __('Billing & Finance') }}
                             </div>
 
@@ -501,7 +501,7 @@
 
                             <button
                                 class="nav-link modern-nav-pill text-start py-2 px-2.5 d-flex align-items-center gap-2 w-100"
-                                x-show="!searchQuery || 'payment gateway bkash nagad rocket upay sslcommerz stripe paypal'.includes(searchQuery.toLowerCase())"
+                                x-show="!searchQuery || 'payment mpesa safaricom daraja paybill'.includes(searchQuery.toLowerCase())"
                                 :class="activeTab === 'payment' ? 'active' : 'text-body'"
                                 @click="activeTab = 'payment'" type="button">
                                 <span class="p-1.5 rounded-3 d-inline-flex align-items-center justify-content-center"
@@ -510,7 +510,7 @@
                                     style="width: 30px; height: 30px;">
                                     <i class="bi bi-credit-card-2-back"></i>
                                 </span>
-                                <span class="flex-grow-1 text-truncate">{{ __('Payment Gateways') }}</span>
+                                <span class="flex-grow-1 text-truncate">{{ __('M-Pesa Payments') }}</span>
                                 @if ($hasTabError('payment'))
                                     <span class="badge bg-danger rounded-circle p-1"
                                         style="width: 8px; height: 8px; flex-shrink: 0;" title="Has errors"></span>
@@ -685,7 +685,6 @@
                                         <label class="form-label fw-semibold">{{ __('System Language') }}</label>
                                         <select class="form-select rounded-3" wire:model="data.site_locale">
                                             <option value="en">{{ __('English (US)') }}</option>
-                                            <option value="bn">{{ __('Bengali (বাংলা)') }}</option>
                                         </select>
                                         @error('data.site_locale')
                                             <span class="text-danger small">{{ $message }}</span>
@@ -695,7 +694,6 @@
                                         <label class="form-label fw-semibold">{{ __('Main Site Language') }}</label>
                                         <select class="form-select rounded-3" wire:model="data.main_site_locale">
                                             <option value="en">{{ __('English (US)') }}</option>
-                                            <option value="bn">{{ __('Bengali (বাংলা)') }}</option>
                                         </select>
                                         @error('data.main_site_locale')
                                             <span class="text-danger small">{{ $message }}</span>
@@ -1222,284 +1220,68 @@
                                 </div>
                             </div>
 
-                            <!-- TAB 5: PAYMENT GATEWAYS (PayBridge Unified Hub) -->
-                            <div x-show="activeTab === 'payment'" x-transition:enter.duration.200ms
-                                x-data="{ categoryFilter: 'all' }">
+                            <!-- TAB 5: PAYMENTS (M-PESA / KENYA) -->
+                            <div x-show="activeTab === 'payment'" x-transition:enter.duration.200ms>
+                                <h5 class="form-section-title text-primary fw-bold mb-1">
+                                    <i class="bi bi-phone-fill me-2"></i>{{ __('M-Pesa Payments (Kenya)') }}
+                                </h5>
+                                <p class="text-muted small mb-4">
+                                    {{ __('Billing is in Kenyan Shillings and collected through Safaricom M-Pesa. Credentials are read from the server environment so they are never stored in the database.') }}
+                                </p>
 
-                                <!-- Header & Stats -->
-                                <div
-                                    class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-3 border-bottom">
-                                    <div>
-                                        <h5 class="form-section-title text-primary fw-bold mb-1">
-                                            <i
-                                                class="bi bi-credit-card-2-front-fill me-2"></i>{{ __('Payment Gateway Management') }}
-                                        </h5>
-                                        <p class="text-muted small mb-0">
-                                            {{ __('Manage all 16 PayBridge gateways, live/test modes, default gateway, and API credentials directly from site settings.') }}
-                                        </p>
+                                @php
+                                    $mpesa = config('payment.drivers.mpesa', []);
+                                    $mpesaConfigured = filled($mpesa['consumer_key'] ?? null)
+                                        && filled($mpesa['consumer_secret'] ?? null)
+                                        && filled($mpesa['shortcode'] ?? null)
+                                        && filled($mpesa['passkey'] ?? null);
+                                @endphp
+
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="card border shadow-sm rounded-3 h-100">
+                                            <div class="card-body">
+                                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                                    <h6 class="fw-bold mb-0">{{ __('Safaricom Daraja') }}</h6>
+                                                    <span class="badge {{ $mpesaConfigured ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning-emphasis' }} rounded-pill px-3 py-2">
+                                                        {{ $mpesaConfigured ? __('Configured') : __('Not configured') }}
+                                                    </span>
+                                                </div>
+                                                <dl class="row small mb-0">
+                                                    <dt class="col-5 text-muted fw-normal">{{ __('Environment') }}</dt>
+                                                    <dd class="col-7 fw-semibold mb-1">{{ ucfirst($mpesa['environment'] ?? 'sandbox') }}</dd>
+                                                    <dt class="col-5 text-muted fw-normal">{{ __('Shortcode') }}</dt>
+                                                    <dd class="col-7 fw-semibold mb-1">{{ $mpesa['shortcode'] ?? '—' }}</dd>
+                                                    <dt class="col-5 text-muted fw-normal">{{ __('Transaction type') }}</dt>
+                                                    <dd class="col-7 fw-semibold mb-1">{{ $mpesa['transaction_type'] ?? 'CustomerPayBillOnline' }}</dd>
+                                                    <dt class="col-5 text-muted fw-normal">{{ __('Currency') }}</dt>
+                                                    <dd class="col-7 fw-semibold mb-1">{{ config('payment.currency', 'KES') }}</dd>
+                                                    <dt class="col-5 text-muted fw-normal">{{ __('Per-request limit') }}</dt>
+                                                    <dd class="col-7 fw-semibold mb-0">KES {{ number_format((int) ($mpesa['max_amount'] ?? 250000)) }}</dd>
+                                                </dl>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="d-flex flex-wrap align-items-center gap-2">
-                                        @if (isset($paybridgeGateways))
-                                            <span
-                                                class="badge bg-success-subtle text-success border border-success-subtle px-3 py-2 rounded-pill font-semibold">
-                                                <i class="bi bi-check-circle-fill me-1"></i>
-                                                {{ $paybridgeGateways->where('is_active', true)->count() }}
-                                                {{ __('Active') }}
-                                            </span>
-                                            <span
-                                                class="badge bg-secondary-subtle text-secondary border border-secondary-subtle px-3 py-2 rounded-pill">
-                                                <i class="bi bi-layers-fill me-1"></i>
-                                                {{ $paybridgeGateways->count() }} {{ __('Total Gateways') }}
-                                            </span>
-                                            @php
-                                                $defaultGw = $paybridgeGateways->firstWhere('is_default', true);
-                                            @endphp
-                                            @if ($defaultGw)
-                                                <span
-                                                    class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle px-3 py-2 rounded-pill">
-                                                    <i class="bi bi-star-fill text-warning me-1"></i>
-                                                    {{ __('Default:') }} {{ $defaultGw->name }}
-                                                </span>
-                                            @endif
-                                        @endif
+                                    <div class="col-md-6">
+                                        <div class="card border shadow-sm rounded-3 h-100">
+                                            <div class="card-body">
+                                                <h6 class="fw-bold mb-3">{{ __('Server environment variables') }}</h6>
+                                                <p class="text-muted small mb-3">{{ __('Set these in .env and never commit live credentials:') }}</p>
+                                                <ul class="list-unstyled small mb-0 font-monospace">
+                                                    <li>MPESA_ENVIRONMENT</li>
+                                                    <li>MPESA_CONSUMER_KEY / MPESA_CONSUMER_SECRET</li>
+                                                    <li>MPESA_SHORTCODE / MPESA_PASSKEY</li>
+                                                    <li>MPESA_CALLBACK_URL</li>
+                                                    <li>MPESA_C2B_VALIDATION_URL / MPESA_C2B_CONFIRMATION_URL</li>
+                                                </ul>
+                                                <p class="text-muted small mt-3 mb-0">
+                                                    {{ __('Register the C2B URLs after setting them:') }}
+                                                    <code>php artisan mpesa:register-c2b</code>
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
-                                @if (isset($paybridgeGateways))
-                                    <!-- Category Filter Pills -->
-                                    <div class="mb-4">
-                                        <ul class="nav nav-pills flex-nowrap overflow-auto gap-1 pb-1" role="tablist">
-                                            <li class="nav-item">
-                                                <button
-                                                    class="nav-link rounded-pill px-3 py-1.5 text-nowrap cursor-pointer"
-                                                    type="button"
-                                                    :class="categoryFilter === 'all' ? 'active shadow-sm' :
-                                                        'text-body-secondary bg-light'"
-                                                    @click="categoryFilter = 'all'">
-                                                    <i class="bi bi-grid-fill me-1"></i> {{ __('All Gateways') }}
-                                                    ({{ $paybridgeGateways->count() }})
-                                                </button>
-                                            </li>
-                                            <li class="nav-item">
-                                                <button
-                                                    class="nav-link rounded-pill px-3 py-1.5 text-nowrap cursor-pointer"
-                                                    type="button"
-                                                    :class="categoryFilter === 'MFS' ? 'active shadow-sm' :
-                                                        'text-body-secondary bg-light'"
-                                                    @click="categoryFilter = 'MFS'">
-                                                    <i class="bi bi-phone-fill me-1"></i>
-                                                    {{ __('MFS / Mobile Banking') }}
-                                                </button>
-                                            </li>
-                                            <li class="nav-item">
-                                                <button
-                                                    class="nav-link rounded-pill px-3 py-1.5 text-nowrap cursor-pointer"
-                                                    type="button"
-                                                    :class="categoryFilter === 'Aggregators' ? 'active shadow-sm' :
-                                                        'text-body-secondary bg-light'"
-                                                    @click="categoryFilter = 'Aggregators'">
-                                                    <i class="bi bi-shield-check me-1"></i> {{ __('Aggregators') }}
-                                                </button>
-                                            </li>
-                                            <li class="nav-item">
-                                                <button
-                                                    class="nav-link rounded-pill px-3 py-1.5 text-nowrap cursor-pointer"
-                                                    type="button"
-                                                    :class="categoryFilter === 'International Cards' ? 'active shadow-sm' :
-                                                        'text-body-secondary bg-light'"
-                                                    @click="categoryFilter = 'International Cards'">
-                                                    <i class="bi bi-credit-card-fill me-1"></i>
-                                                    {{ __('International Cards') }}
-                                                </button>
-                                            </li>
-                                            <li class="nav-item">
-                                                <button
-                                                    class="nav-link rounded-pill px-3 py-1.5 text-nowrap cursor-pointer"
-                                                    type="button"
-                                                    :class="categoryFilter === 'Crypto' ? 'active shadow-sm' :
-                                                        'text-body-secondary bg-light'"
-                                                    @click="categoryFilter = 'Crypto'">
-                                                    <i class="bi bi-currency-bitcoin me-1"></i> {{ __('Crypto') }}
-                                                </button>
-                                            </li>
-                                            <li class="nav-item">
-                                                <button
-                                                    class="nav-link rounded-pill px-3 py-1.5 text-nowrap cursor-pointer"
-                                                    type="button"
-                                                    :class="categoryFilter === 'Banks & QR' ? 'active shadow-sm' :
-                                                        'text-body-secondary bg-light'"
-                                                    @click="categoryFilter = 'Banks & QR'">
-                                                    <i class="bi bi-qr-code-scan me-1"></i> {{ __('Banks & QR') }}
-                                                </button>
-                                            </li>
-                                        </ul>
-                                    </div>
-
-                                    <!-- Gateways Grid -->
-                                    <div class="row g-3">
-                                        @foreach ($paybridgeGateways as $gateway)
-                                            @php
-                                                $definition = $paybridgeDefinitions[$gateway->code] ?? [];
-                                                $category = $definition['category'] ?? $gateway->category;
-
-                                                $brandColor = 'primary';
-                                                $brandIcon = 'bi-credit-card-2-front';
-                                                if (str_contains($gateway->code, 'bkash')) {
-                                                    $brandColor = 'danger';
-                                                    $brandIcon = 'bi-wallet2';
-                                                } elseif (str_contains($gateway->code, 'nagad')) {
-                                                    $brandColor = 'warning';
-                                                    $brandIcon = 'bi-cash-stack';
-                                                } elseif (str_contains($gateway->code, 'rocket')) {
-                                                    $brandColor = 'purple';
-                                                    $brandIcon = 'bi-send';
-                                                } elseif (str_contains($gateway->code, 'upay')) {
-                                                    $brandColor = 'info';
-                                                    $brandIcon = 'bi-phone';
-                                                } elseif (str_contains($gateway->code, 'sslcommerz')) {
-                                                    $brandColor = 'primary';
-                                                    $brandIcon = 'bi-shield-check';
-                                                } elseif (str_contains($gateway->code, 'stripe')) {
-                                                    $brandColor = 'indigo';
-                                                    $brandIcon = 'bi-stripe';
-                                                } elseif (str_contains($gateway->code, 'paypal')) {
-                                                    $brandColor = 'primary';
-                                                    $brandIcon = 'bi-paypal';
-                                                } elseif (
-                                                    str_contains($gateway->code, 'binance') ||
-                                                    str_contains($gateway->code, 'crypto') ||
-                                                    str_contains($gateway->code, 'nowpayments')
-                                                ) {
-                                                    $brandColor = 'warning';
-                                                    $brandIcon = 'bi-currency-bitcoin';
-                                                } elseif (str_contains($gateway->code, 'qr')) {
-                                                    $brandColor = 'success';
-                                                    $brandIcon = 'bi-qr-code-scan';
-                                                }
-                                            @endphp
-
-                                            <div class="col-12 col-md-6 col-xl-4"
-                                                x-show="categoryFilter === 'all' || categoryFilter === '{{ $category }}'"
-                                                x-transition:enter.duration.200ms>
-                                                <div
-                                                    class="card h-100 border shadow-sm transition-all rounded-3 position-relative {{ $gateway->is_active ? 'border-primary-subtle' : 'border-light-subtle opacity-75' }}">
-
-                                                    <!-- Card Header -->
-                                                    <div
-                                                        class="card-header bg-transparent border-bottom-0 pb-0 pt-3 px-3 d-flex align-items-center justify-content-between">
-                                                        <div class="d-flex align-items-center gap-2">
-                                                            <div class="avatar bg-{{ $brandColor }}-subtle text-{{ $brandColor }} rounded-2 d-flex align-items-center justify-content-center"
-                                                                style="width: 38px; height: 38px;">
-                                                                <i class="bi {{ $brandIcon }} fs-5"></i>
-                                                            </div>
-                                                            <div>
-                                                                <h6 class="mb-0 fw-bold text-truncate"
-                                                                    style="max-width: 160px;"
-                                                                    title="{{ $gateway->name }}">
-                                                                    {{ $gateway->name }}
-                                                                </h6>
-                                                                <span
-                                                                    class="badge bg-secondary-subtle text-secondary py-0.5 px-2 text-[10px] rounded-pill">
-                                                                    {{ $category }}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- Livewire Toggle Switch -->
-                                                        <div class="form-check form-switch form-switch-md mb-0">
-                                                            <input class="form-check-input cursor-pointer"
-                                                                type="checkbox" role="switch"
-                                                                title="{{ $gateway->is_active ? __('Click to Disable') : __('Click to Enable') }}"
-                                                                wire:click="togglePayBridgeGateway('{{ $gateway->code }}')"
-                                                                {{ $gateway->is_active ? 'checked' : '' }}>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Card Body -->
-                                                    <div class="card-body p-3">
-                                                        <p class="text-body-secondary small mb-3 text-truncate-2"
-                                                            style="min-height: 38px; font-size: 0.8rem;">
-                                                            {{ $definition['description'] ?? __('Configure credentials to accept payments.') }}
-                                                        </p>
-
-                                                        <!-- Badges -->
-                                                        <div class="d-flex flex-wrap align-items-center gap-1.5 mb-1">
-                                                            @if ($gateway->is_active)
-                                                                <span
-                                                                    class="badge bg-success-subtle text-success py-1 px-2 rounded-pill font-semibold">
-                                                                    <i class="bi bi-circle-fill me-1"
-                                                                        style="font-size: 6px;"></i>{{ __('Active') }}
-                                                                </span>
-                                                            @else
-                                                                <span
-                                                                    class="badge bg-secondary-subtle text-secondary py-1 px-2 rounded-pill">
-                                                                    <i
-                                                                        class="bi bi-dash-circle me-1"></i>{{ __('Inactive') }}
-                                                                </span>
-                                                            @endif
-
-                                                            <button type="button"
-                                                                wire:click="togglePayBridgeSandbox('{{ $gateway->code }}')"
-                                                                class="badge border-0 py-1 px-2 rounded-pill cursor-pointer {{ $gateway->is_sandbox ? 'bg-warning-subtle text-warning-emphasis' : 'bg-info-subtle text-info-emphasis' }}"
-                                                                title="{{ __('Click to toggle Sandbox / Live mode') }}">
-                                                                <i
-                                                                    class="bi {{ $gateway->is_sandbox ? 'bi-wrench-adjustable' : 'bi-broadcast' }} me-1"></i>
-                                                                {{ $gateway->is_sandbox ? __('Sandbox') : __('Live') }}
-                                                            </button>
-
-                                                            @if ($gateway->is_default)
-                                                                <button type="button"
-                                                                    wire:click="setDefaultPayBridgeGateway('{{ $gateway->code }}')"
-                                                                    class="badge bg-primary text-white border-0 py-1 px-2 rounded-pill cursor-pointer"
-                                                                    title="{{ __('Click to turn off default') }}">
-                                                                    <i
-                                                                        class="bi bi-star-fill me-1"></i>{{ __('Default') }}
-                                                                    <i class="bi bi-x-circle ms-1"></i>
-                                                                </button>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- Card Footer -->
-                                                    <div
-                                                        class="card-footer bg-transparent border-top pt-2 pb-3 px-3 d-flex align-items-center justify-content-between gap-2">
-                                                        @if (!$gateway->is_default)
-                                                            <button type="button"
-                                                                class="btn btn-link btn-sm text-secondary text-decoration-none p-0 fw-semibold"
-                                                                wire:click="setDefaultPayBridgeGateway('{{ $gateway->code }}')">
-                                                                <i
-                                                                    class="bi bi-star me-1"></i>{{ __('Make Default') }}
-                                                            </button>
-                                                        @else
-                                                            <button type="button"
-                                                                class="btn btn-link btn-sm text-primary text-decoration-none p-0 fw-bold"
-                                                                wire:click="setDefaultPayBridgeGateway('{{ $gateway->code }}')"
-                                                                title="{{ __('Click to turn off default') }}">
-                                                                <i
-                                                                    class="bi bi-check-all me-1"></i>{{ __('Primary Default') }}
-                                                                <i class="bi bi-x-circle text-muted ms-1 small"></i>
-                                                            </button>
-                                                        @endif
-
-                                                        <button type="button"
-                                                            class="btn btn-outline-primary btn-sm rounded-pill px-3 shadow-sm fw-semibold"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modal-gw-{{ $gateway->code }}">
-                                                            <i class="bi bi-gear-fill me-1"></i>{{ __('Configure') }}
-                                                        </button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @else
-                                    <div class="alert alert-warning border-0 rounded-3 p-3">
-                                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                                        {{ __('PayBridge gateways could not be loaded.') }}
-                                    </div>
-                                @endif
-
                             </div>
 
                             <!-- TAB 6: SECURITY & SECRETS -->
@@ -1745,257 +1527,6 @@
                 </button>
             </div>
         </div>
-
-        <!-- PAYBRIDGE CONFIGURATION MODALS (Rendered outside master form) -->
-        @if (isset($paybridgeGateways))
-            @foreach ($paybridgeGateways as $gateway)
-                @php
-                    $definition = $paybridgeDefinitions[$gateway->code] ?? [];
-                    $fields = $definition['fields'] ?? [];
-                    $brandColor = 'primary';
-                    if (str_contains($gateway->code, 'bkash')) {
-                        $brandColor = 'danger';
-                    } elseif (str_contains($gateway->code, 'nagad')) {
-                        $brandColor = 'warning';
-                    } elseif (str_contains($gateway->code, 'rocket')) {
-                        $brandColor = 'purple';
-                    } elseif (str_contains($gateway->code, 'upay')) {
-                        $brandColor = 'info';
-                    } elseif (str_contains($gateway->code, 'sslcommerz')) {
-                        $brandColor = 'primary';
-                    } elseif (str_contains($gateway->code, 'stripe')) {
-                        $brandColor = 'indigo';
-                    } elseif (str_contains($gateway->code, 'paypal')) {
-                        $brandColor = 'primary';
-                    } elseif (str_contains($gateway->code, 'binance') || str_contains($gateway->code, 'crypto')) {
-                        $brandColor = 'warning';
-                    } elseif (str_contains($gateway->code, 'qr')) {
-                        $brandColor = 'success';
-                    }
-                @endphp
-
-                <div class="modal fade" id="modal-gw-{{ $gateway->code }}" tabindex="-1"
-                    aria-labelledby="modalLabel-{{ $gateway->code }}" aria-hidden="true" wire:ignore.self>
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content border-0 shadow-lg rounded-4">
-                            <form action="{{ route('paybridge.admin.update', $gateway->code) }}" method="POST">
-                                @csrf
-
-                                <div class="modal-header border-bottom px-4 py-3">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="avatar bg-{{ $brandColor }}-subtle text-{{ $brandColor }} rounded-3 d-flex align-items-center justify-content-center"
-                                            style="width: 36px; height: 36px;">
-                                            <i class="bi bi-gear-fill fs-5"></i>
-                                        </div>
-                                        <div>
-                                            <h5 class="modal-title fw-bold mb-0"
-                                                id="modalLabel-{{ $gateway->code }}">
-                                                {{ __('Configure') }} {{ $gateway->name }}
-                                            </h5>
-                                            <small
-                                                class="text-muted">{{ $definition['category'] ?? $gateway->category }}</small>
-                                        </div>
-                                    </div>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-
-                                <div class="modal-body p-4">
-                                    <!-- Status switches -->
-                                    <div class="row g-3 mb-4 p-3 bg-light bg-opacity-50 rounded-3 border">
-                                        <div class="col-md-4">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input cursor-pointer" type="checkbox"
-                                                    name="is_active" value="1"
-                                                    id="active-{{ $gateway->code }}"
-                                                    {{ $gateway->is_active ? 'checked' : '' }}>
-                                                <label class="form-check-label fw-semibold"
-                                                    for="active-{{ $gateway->code }}">
-                                                    {{ __('Enable Gateway') }}
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input cursor-pointer" type="checkbox"
-                                                    name="is_sandbox" value="1"
-                                                    id="sandbox-{{ $gateway->code }}"
-                                                    {{ $gateway->is_sandbox ? 'checked' : '' }}>
-                                                <label class="form-check-label fw-semibold"
-                                                    for="sandbox-{{ $gateway->code }}">
-                                                    {{ __('Sandbox (Test Mode)') }}
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input cursor-pointer" type="checkbox"
-                                                    name="is_default" value="1"
-                                                    id="default-{{ $gateway->code }}"
-                                                    {{ $gateway->is_default ? 'checked' : '' }}>
-                                                <label class="form-check-label fw-semibold"
-                                                    for="default-{{ $gateway->code }}">
-                                                    {{ __('Primary Default') }}
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Dynamic Credential Fields -->
-                                    <h6 class="fw-bold mb-3 text-primary"><i
-                                            class="bi bi-key me-1"></i>{{ __('API Credentials & Security') }}</h6>
-
-                                    @if (empty($fields))
-                                        <div class="alert alert-info border-0 rounded-3 py-2 small">
-                                            <i class="bi bi-info-circle me-1"></i>
-                                            {{ __('No custom credentials required for this gateway.') }}
-                                        </div>
-                                    @else
-                                        <div class="row g-3">
-                                            @foreach ($fields as $fieldName => $fieldMeta)
-                                                @php
-                                                    $fieldVal = $gateway->credentials[$fieldName] ?? '';
-                                                    $fieldType = $fieldMeta['type'] ?? 'text';
-                                                    $isPassword = $fieldType === 'password';
-                                                    $fieldPlaceholder = !empty($fieldMeta['placeholder'])
-                                                        ? $fieldMeta['placeholder']
-                                                        : match ($fieldName) {
-                                                            'app_key' => 'e.g. 5c98a3b2b... or App Key',
-                                                            'app_secret' => 'Enter App Secret Key',
-                                                            'username' => 'e.g. merchant_username',
-                                                            'password' => 'Enter Password',
-                                                            'merchant_id' => 'e.g. 683002007104225',
-                                                            'merchant_number' => 'e.g. 017xxxxxxxx',
-                                                            'public_key' => "-----BEGIN PUBLIC KEY-----\n...",
-                                                            'private_key' => "-----BEGIN RSA PRIVATE KEY-----\n...",
-                                                            'merchant_key' => 'Enter Merchant Key / Secret',
-                                                            'merchant_password' => 'Enter Merchant Password',
-                                                            'store_id' => 'e.g. testbox or Store ID',
-                                                            'store_password' => 'Enter Store Password',
-                                                            'signature_key' => 'Enter Signature Key',
-                                                            'secret_key' => 'Enter Secret Key',
-                                                            'merchant_name' => 'e.g. ' .
-                                                                config('app.name', 'My Business'),
-                                                            'merchant_prefix' => 'e.g. TXN',
-                                                            'client_id' => 'e.g. PayPal Client ID',
-                                                            'secret' => 'Enter Secret',
-                                                            'webhook_secret' => 'e.g. whsec_...',
-                                                            'api_key' => 'e.g. API Key',
-                                                            'ipn_secret' => 'Enter IPN Secret',
-                                                            'terminal_id' => 'e.g. TID00001',
-                                                            'acquirer_bin' => 'e.g. 000001',
-                                                            'mcc' => 'e.g. 5411',
-                                                            'merchant_city' => 'e.g. Dhaka',
-                                                            default => $fieldMeta['default'] ??
-                                                                'Enter ' .
-                                                                    ($fieldMeta['label'] ??
-                                                                        ucfirst(str_replace('_', ' ', $fieldName))),
-                                                        };
-                                                @endphp
-                                                <div
-                                                    class="col-12 {{ in_array($fieldType, ['textarea']) ? 'col-md-12' : 'col-md-6' }}">
-                                                    <label
-                                                        class="form-label fw-semibold d-flex align-items-center justify-content-between"
-                                                        for="cred-{{ $gateway->code }}-{{ $fieldName }}">
-                                                        <span>
-                                                            {{ $fieldMeta['label'] ?? ucfirst(str_replace('_', ' ', $fieldName)) }}
-                                                            @if (!empty($fieldMeta['required']))
-                                                                <span class="text-danger">*</span>
-                                                            @endif
-                                                        </span>
-                                                        @if ($isPassword && !empty($fieldVal))
-                                                            <span
-                                                                class="badge bg-success-subtle text-success text-[10px]">{{ __('Saved (Encrypted)') }}</span>
-                                                        @endif
-                                                    </label>
-
-                                                    @if ($fieldType === 'textarea')
-                                                        <textarea class="form-control rounded-3 font-monospace" style="font-size: 0.8rem;" rows="3"
-                                                            id="cred-{{ $gateway->code }}-{{ $fieldName }}" name="credentials[{{ $fieldName }}]"
-                                                            placeholder="{{ $fieldPlaceholder }}">{{ $fieldVal }}</textarea>
-                                                    @elseif($fieldType === 'select')
-                                                        <select class="form-select rounded-3"
-                                                            id="cred-{{ $gateway->code }}-{{ $fieldName }}"
-                                                            name="credentials[{{ $fieldName }}]">
-                                                            @foreach ($fieldMeta['options'] ?? [] as $optVal => $optLabel)
-                                                                <option value="{{ $optVal }}"
-                                                                    {{ $fieldVal == $optVal ? 'selected' : '' }}>
-                                                                    {{ $optLabel }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    @elseif($isPassword)
-                                                        <div class="input-group">
-                                                            <input type="password"
-                                                                class="form-control rounded-start-3"
-                                                                id="cred-{{ $gateway->code }}-{{ $fieldName }}"
-                                                                name="credentials[{{ $fieldName }}]"
-                                                                placeholder="{{ !empty($fieldVal) ? '•••••••••••••••• (Leave blank to keep current)' : $fieldPlaceholder }}">
-                                                            <button class="btn btn-outline-secondary rounded-end-3"
-                                                                type="button"
-                                                                onclick="const el = document.getElementById('cred-{{ $gateway->code }}-{{ $fieldName }}'); el.type = el.type === 'password' ? 'text' : 'password';">
-                                                                <i class="bi bi-eye"></i>
-                                                            </button>
-                                                        </div>
-                                                    @else
-                                                        <input type="text" class="form-control rounded-3"
-                                                            id="cred-{{ $gateway->code }}-{{ $fieldName }}"
-                                                            name="credentials[{{ $fieldName }}]"
-                                                            value="{{ $fieldVal }}"
-                                                            placeholder="{{ $fieldPlaceholder }}">
-                                                    @endif
-
-                                                    @if (!empty($fieldMeta['description']))
-                                                        <small class="text-muted d-block mt-1"
-                                                            style="font-size: 0.75rem;">
-                                                            {{ $fieldMeta['description'] }}
-                                                        </small>
-                                                    @endif
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endif
-
-                                    <!-- Webhook & Callback Endpoints -->
-                                    <div class="mt-4 pt-3 border-top">
-                                        <h6 class="fw-bold mb-2 small text-muted"><i
-                                                class="bi bi-link-45deg me-1"></i>{{ __('System Endpoints (Auto-configured)') }}
-                                        </h6>
-                                        <div
-                                            class="p-2.5 bg-body-tertiary rounded-3 small font-monospace d-flex align-items-center justify-content-between mb-2">
-                                            <div><span class="badge bg-secondary me-1">Callback:</span>
-                                                {{ url('/payment/' . $gateway->code . '/callback') }}</div>
-                                            <button type="button"
-                                                class="btn btn-link btn-sm p-0 text-decoration-none"
-                                                onclick="navigator.clipboard.writeText('{{ url('/payment/' . $gateway->code . '/callback') }}'); alert('Copied!');">
-                                                <i class="bi bi-clipboard"></i>
-                                            </button>
-                                        </div>
-                                        <div
-                                            class="p-2.5 bg-body-tertiary rounded-3 small font-monospace d-flex align-items-center justify-content-between">
-                                            <div><span class="badge bg-secondary me-1">Webhook:</span>
-                                                {{ url('/payment/' . $gateway->code . '/webhook') }}</div>
-                                            <button type="button"
-                                                class="btn btn-link btn-sm p-0 text-decoration-none"
-                                                onclick="navigator.clipboard.writeText('{{ url('/payment/' . $gateway->code . '/webhook') }}'); alert('Copied!');">
-                                                <i class="bi bi-clipboard"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="modal-footer border-top px-4 py-3">
-                                    <button type="button" class="btn btn-secondary rounded-pill px-4"
-                                        data-bs-dismiss="modal">{{ __('Cancel') }}</button>
-                                    <button type="submit" class="btn btn-primary rounded-pill px-4 fw-semibold">
-                                        <i class="bi bi-check-circle me-1"></i> {{ __('Save Configuration') }}
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        @endif
 
         <x-filament-actions::modals />
     </div>

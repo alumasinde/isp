@@ -36,7 +36,6 @@ use App\Rules\ValidPhoneDigits;
 use Livewire\Component;
 
 use Livewire\WithFileUploads;
-use PayBridge\Payment\Models\PaymentGatewaySetting;
 
 class MainSiteSetup extends Component implements HasActions, HasForms
 {
@@ -110,7 +109,7 @@ class MainSiteSetup extends Component implements HasActions, HasForms
             'site_whatsapp' => MainSiteData::getValue('site_whatsapp'),
 
             // Billing & Invoicing
-            'site_currency' => MainSiteData::getValue('site_currency', 'BDT'),
+            'site_currency' => MainSiteData::getValue('site_currency', 'KES'),
             'site_invoice_prefix' => MainSiteData::getValue('site_invoice_prefix', 'INV-'),
             'customer_id_prefix' => MainSiteData::getValue('customer_id_prefix', 'FCNET'),
             'site_invoice_logo' => MainSiteData::getValue('site_invoice_logo'),
@@ -136,25 +135,7 @@ class MainSiteSetup extends Component implements HasActions, HasForms
             'log_server_routers' => MainSiteData::getValue('log_server_routers', []),
             'log_retention_days' => MainSiteData::getValue('log_retention_days', 30),
 
-            // Payment Gateways
-            'payment_bkash_enabled' => MainSiteData::getValue('payment_bkash_enabled', 0) ? 1 : 0,
-            'payment_bkash_base_url' => MainSiteData::getValue('payment_bkash_base_url', 'https://tokenized.sandbox.bka.sh/v1.2.0-beta'),
-            'payment_bkash_username' => MainSiteData::getValue('payment_bkash_username'),
-            'payment_bkash_password' => MainSiteData::getValue('payment_bkash_password'),
-            'payment_bkash_app_key' => MainSiteData::getValue('payment_bkash_app_key'),
-            'payment_bkash_app_secret' => MainSiteData::getValue('payment_bkash_app_secret'),
-            'payment_bkash_api_type' => MainSiteData::getValue('payment_bkash_api_type', 'tokenized'),
-
-            'payment_nagad_enabled' => MainSiteData::getValue('payment_nagad_enabled', 0) ? 1 : 0,
-            'payment_nagad_base_url' => MainSiteData::getValue('payment_nagad_base_url', 'http://sandbox.nagad.com.bd:10080/remote-payment-gateway-1.0/api/dfs'),
-            'payment_nagad_merchant_id' => MainSiteData::getValue('payment_nagad_merchant_id'),
-            'payment_nagad_public_key' => MainSiteData::getValue('payment_nagad_public_key'),
-            'payment_nagad_private_key' => MainSiteData::getValue('payment_nagad_private_key'),
-
-            'payment_sslcommerz_enabled' => MainSiteData::getValue('payment_sslcommerz_enabled', 0) ? 1 : 0,
-            'payment_sslcommerz_store_id' => MainSiteData::getValue('payment_sslcommerz_store_id'),
-            'payment_sslcommerz_store_password' => MainSiteData::getValue('payment_sslcommerz_store_password'),
-            'payment_sslcommerz_sandbox' => MainSiteData::getValue('payment_sslcommerz_sandbox', 1) ? 1 : 0,
+            // Payments run through M-Pesa (configured via environment).
 
             // Dynamic Web Content (MainSiteData unique)
             'hero_title' => MainSiteData::getValue('hero_title'),
@@ -405,9 +386,6 @@ class MainSiteSetup extends Component implements HasActions, HasForms
             'about_title', 'about_body', 'packages_section_title', 'testimonial_title', 'footer_copyright', 'is_active',
             'hero_slides', 'services', 'testimonials', 'gallery_items', 'gallery_categories', 'valuable_clients',
             'btcl_tariff_link', 'btcl_tariff_pdf', 'important_links',
-            'payment_bkash_enabled', 'payment_bkash_base_url', 'payment_bkash_username', 'payment_bkash_password', 'payment_bkash_app_key', 'payment_bkash_app_secret', 'payment_bkash_api_type',
-            'payment_nagad_enabled', 'payment_nagad_base_url', 'payment_nagad_merchant_id', 'payment_nagad_public_key', 'payment_nagad_private_key',
-            'payment_sslcommerz_enabled', 'payment_sslcommerz_store_id', 'payment_sslcommerz_store_password', 'payment_sslcommerz_sandbox',
             'theme_preset', 'theme_name', 'theme_primary_color', 'theme_accent_color', 'theme_card_style',
             'theme_border_radius', 'theme_font_size', 'theme_font_family', 'theme_nav_style',
             'theme_widget_style', 'theme_mode', 'theme_transparency', 'theme_blur', 'theme_animations', 'theme_gradient_intensity',
@@ -1011,54 +989,8 @@ class MainSiteSetup extends Component implements HasActions, HasForms
         return array_unique($fields);
     }
 
-    public function togglePayBridgeGateway(string $code): void
-    {
-        $gateway = PaymentGatewaySetting::where('code', $code)->first();
-        if ($gateway) {
-            $gateway->is_active = ! $gateway->is_active;
-            $gateway->save();
-            flash()->success("{$gateway->name} is now " . ($gateway->is_active ? 'Active' : 'Inactive'));
-        }
-    }
-
-    public function togglePayBridgeSandbox(string $code): void
-    {
-        $gateway = PaymentGatewaySetting::where('code', $code)->first();
-        if ($gateway) {
-            $gateway->is_sandbox = ! $gateway->is_sandbox;
-            $gateway->save();
-            flash()->success("{$gateway->name} mode changed to " . ($gateway->is_sandbox ? 'Sandbox (Test)' : 'Live'));
-        }
-    }
-
-    public function setDefaultPayBridgeGateway(string $code): void
-    {
-        $gateway = PaymentGatewaySetting::where('code', $code)->first();
-        if ($gateway) {
-            if ($gateway->is_default) {
-                $gateway->removeDefault();
-                flash()->success("{$gateway->name} is no longer the default gateway.");
-            } else {
-                $gateway->setAsDefault();
-                flash()->success("{$gateway->name} set as primary default gateway!");
-            }
-        }
-    }
-
     public function render()
     {
-        $definitions = PaymentGatewaySetting::getFieldDefinitions();
-
-        // Auto-sync any newly added gateways from PayBridge
-        if (PaymentGatewaySetting::count() < count($definitions)) {
-            PaymentGatewaySetting::seedDefaults();
-        }
-
-        $gateways = PaymentGatewaySetting::orderBy('sort_order', 'asc')->get();
-
-        return view('livewire.main-site-setup', [
-            'paybridgeGateways'    => $gateways,
-            'paybridgeDefinitions' => $definitions,
-        ])->layout('layouts.app');
+        return view('livewire.main-site-setup')->layout('layouts.app');
     }
 }

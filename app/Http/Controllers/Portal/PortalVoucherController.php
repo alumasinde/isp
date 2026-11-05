@@ -109,7 +109,7 @@ class PortalVoucherController extends Controller
                 
                 // Show success page or message
                 return redirect()->route('portal.voucher.recharge')
-                    ->with('success', "Account successfully recharged with BDT {$voucher->value}! Your service is now active.");
+                    ->with('success', "Account successfully recharged with KES {$voucher->value}! Your service is now active.");
             } else {
                 throw new \Exception("Payment processing failed.");
             }

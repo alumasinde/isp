@@ -12,7 +12,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-uppercase fw-bold mb-1 text-white-50" style="font-size: 0.72rem; letter-spacing: 1px;">{{ __('Wallet Balance') }}</h6>
-                            <h3 class="fw-bold mb-0">৳{{ number_format($walletBalance, 2) }}</h3>
+                            <h3 class="fw-bold mb-0">KSh {{ number_format($walletBalance, 2) }}</h3>
                         </div>
                         <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(255,255,255,0.15);">
                             <i class="bi bi-wallet2 fs-4 text-success"></i>
@@ -58,15 +58,15 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
                             <h6 class="text-uppercase fw-bold mb-1 text-white-50" style="font-size: 0.72rem; letter-spacing: 1px;">{{ __('Monthly Earnings') }}</h6>
-                            <h3 class="fw-bold mb-0">৳{{ number_format($earningsMonth, 2) }}</h3>
+                            <h3 class="fw-bold mb-0">KSh {{ number_format($earningsMonth, 2) }}</h3>
                         </div>
                         <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; background: rgba(255,255,255,0.15);">
                             <i class="bi bi-graph-up-arrow fs-4"></i>
                         </div>
                     </div>
                     <div class="mt-3 pt-2 border-top border-white border-opacity-10 d-flex justify-content-between small text-white-50">
-                        <span>{{ __('Today:') }} ৳{{ number_format($earningsToday, 2) }}</span>
-                        <span>{{ __('Total:') }} ৳{{ number_format($totalEarnings, 2) }}</span>
+                        <span>{{ __('Today:') }} KSh {{ number_format($earningsToday, 2) }}</span>
+                        <span>{{ __('Total:') }} KSh {{ number_format($totalEarnings, 2) }}</span>
                     </div>
                 </div>
                 <div class="position-absolute end-0 bottom-0" style="opacity: 0.08; transform: translate(10%, 10%); z-index: 0; pointer-events: none;">
@@ -125,7 +125,7 @@
                             <div class="list-group-item d-flex justify-content-between align-items-center py-2.5 px-3">
                                 <div>
                                     <div class="fw-bold text-dark small">{{ $sale->package->package ?? __('Custom / Deleted') }}</div>
-                                    <small class="text-muted">{{ __('Speed:') }} {{ $sale->package->speed ?? 'N/A' }} | {{ __('Price:') }} ৳{{ number_format($sale->package->price ?? 0, 0) }}</small>
+                                    <small class="text-muted">{{ __('Speed:') }} {{ $sale->package->speed ?? 'N/A' }} | {{ __('Price:') }} KSh {{ number_format($sale->package->price ?? 0, 0) }}</small>
                                 </div>
                                 <span class="badge bg-primary-subtle text-primary rounded-pill px-2.5 py-1">
                                     {{ trans_choice('{1} :count User|[2,*] :count Users', $sale->count, ['count' => $sale->count]) }}
@@ -223,7 +223,7 @@
 
                     const options = {
                         series: [{
-                            name: '{{ __('Commission Earned (BDT)') }}',
+                            name: '{{ __('Commission Earned (KES)') }}',
                             data: amounts
                         }],
                         chart: {
@@ -257,13 +257,13 @@
                         },
                         yaxis: {
                             labels: {
-                                formatter: function (val) { return '৳' + val.toFixed(0); },
+                                formatter: function (val) { return 'KSh ' + val.toFixed(0); },
                                 style: { colors: '#94a3b8' }
                             }
                         },
                         tooltip: {
                             y: {
-                                formatter: function (val) { return '৳' + val.toFixed(2); }
+                                formatter: function (val) { return 'KSh ' + val.toFixed(2); }
                             }
                         }
                     };

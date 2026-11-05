@@ -24,7 +24,7 @@
                             @forelse($vouchers as $voucher)
                                 <tr>
                                     <td class="fw-bold text-dark ps-3"><code>{{ $voucher->code }}</code></td>
-                                    <td class="fw-semibold text-success">৳{{ number_format($voucher->value, 2) }}</td>
+                                    <td class="fw-semibold text-success">KSh {{ number_format($voucher->value, 2) }}</td>
                                     <td>
                                         @if($voucher->type === 'package_based')
                                             <span class="badge bg-primary-subtle text-primary">{{ __('Package: :package', ['package' => $voucher->package->package ?? 'N/A']) }}</span>
@@ -63,7 +63,7 @@
                                     </td>
                                     <td class="text-end pe-3">
                                         @if($voucher->status === 'unused' && !$voucher->isExpired())
-                                            <button onclick="confirm('{{ __('Are you sure you want to cancel this voucher and refund BDT :value to your wallet?', ['value' => number_format($voucher->value, 2)]) }}') || event.stopImmediatePropagation()" wire:click="cancelVoucher({{ $voucher->id }})" class="btn btn-outline-danger btn-sm rounded-pill px-2.5 py-0.5" style="font-size: 0.75rem; font-weight: 600;">
+                                            <button onclick="confirm('{{ __('Are you sure you want to cancel this voucher and refund KES :value to your wallet?', ['value' => number_format($voucher->value, 2)]) }}') || event.stopImmediatePropagation()" wire:click="cancelVoucher({{ $voucher->id }})" class="btn btn-outline-danger btn-sm rounded-pill px-2.5 py-0.5" style="font-size: 0.75rem; font-weight: 600;">
                                                 <i class="bi bi-x-circle me-1"></i> {{ __('Cancel') }}
                                             </button>
                                         @else
@@ -118,7 +118,7 @@
                     <!-- Fixed Amount Group -->
                     @if($type === 'fixed_amount')
                         <div class="mb-3">
-                            <label class="form-label fw-bold">{{ __('Voucher Value (BDT)') }}</label>
+                            <label class="form-label fw-bold">{{ __('Voucher Value (KES)') }}</label>
                             <input type="number" step="0.01" wire:model="value" class="form-control" placeholder="0.00" required>
                             @error('value') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
                         </div>
@@ -132,7 +132,7 @@
                                 <option value="">{{ __('-- Choose Package --') }}</option>
                                 @foreach($packages as $pkg)
                                     <option value="{{ $pkg->id }}">
-                                        {{ $pkg->package }} ({{ __('Price:') }} BDT {{ number_format($pkg->price, 0) }})
+                                        {{ $pkg->package }} ({{ __('Price:') }} KES {{ number_format($pkg->price, 0) }})
                                     </option>
                                 @endforeach
                             </select>

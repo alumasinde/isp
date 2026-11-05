@@ -27,7 +27,7 @@
     </script>
     <script>
         @php
-            $tz = config('app.timezone', 'Asia/Dhaka');
+            $tz = config('app.timezone', 'Africa/Nairobi');
             $phoneCountry = 'bd';
             if (class_exists('IntlTimeZone')) {
                 $region = \IntlTimeZone::getRegion($tz);
@@ -53,69 +53,39 @@
                     <img class="d-inline-block align-text-top" style="width:190px;height:53px;"
                         src="{{ site_image(siteUrlSettings('site_logo')) }}" alt="logo" />
                 @else
-                    @if (siteUrlSettings('site_icon'))
-                        <img class="d-inline-block align-text-top" src="{{ site_image(siteUrlSettings('site_icon')) }}"
+                                            <img class="d-inline-block align-text-top" src="{{ site_image(siteUrlSettings('site_icon')) }}"
                             alt="" width="40" />
                         <span
                             class="font-sans-serif text-success">{{ siteUrlSettings('site_name') ?? config('app.name') }}</span>
-                    @else
-                        <span
-                            class="font-sans-serif text-success">{{ siteUrlSettings('site_name') ?? config('app.name') }}</span>
-                    @endif
                 @endif
             </a>
 
-            {{-- Nav Links --}}
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="nav navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="#banner">{{ __('Home') }}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#features">{{ __('Service') }}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#gallery">{{ __('Gallery') }}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#pricing-table">{{ __('Price') }}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#team">{{ __('Team') }}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#blog">{{ __('Blog') }}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#testimonial">{{ __('Testimonial') }}</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact-form">{{ __('Contact') }}</a></li>
-                </ul>
-            </div>
-
-            <div class="d-flex align-items-center ms-auto ms-lg-3 me-2 gap-2">
-                {{-- Language Switcher next to Theme Toggle --}}
-                @php
-                    $currentMainLocale = session()->get(
-                        'main_site_locale',
-                        siteUrlSettings('main_site_locale') ?? 'en',
-                    );
-                @endphp
-                @if ($currentMainLocale === 'bn')
-                    <a href="{{ route('welcome.lang', 'en') }}"
-                        class="btn btn-outline-secondary btn-sm px-2.5 py-1 rounded-3 d-flex align-items-center gap-1 font-sans-serif fw-bold text-decoration-none border-secondary text-secondary"
-                        style="font-size: 0.85rem; transition: all 0.3s ease;">
-                        <i class="bi bi-globe"></i> EN
-                    </a>
-                @else
-                    <a href="{{ route('welcome.lang', 'bn') }}"
-                        class="btn btn-outline-secondary btn-sm px-2.5 py-1 rounded-3 d-flex align-items-center gap-1 font-sans-serif fw-bold text-decoration-none border-secondary text-secondary"
-                        style="font-size: 0.85rem; transition: all 0.3s ease;">
-                        <i class="bi bi-globe"></i> বাং
-                    </a>
-                @endif
-
+            <div class="d-flex align-items-center gap-2 ms-auto">
                 <button id="theme-toggle"
                     class="btn btn-link rounded-circle p-2 text-light text-decoration-none border-0" type="button"
                     aria-label="Toggle Theme">
                     <i class="bi bi-moon-stars" id="theme-toggle-icon" style="font-size: 1.25rem;"></i>
                 </button>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             </div>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="nav nav-tabs navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="#banner">{{ __('Home') }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">{{ __('Service') }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">{{ __('Gallery') }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pricing-table">{{ __('Packages') }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#testimonial">{{ __('Reviews') }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact-form">{{ __('Contact') }}</a></li>
+                </ul>
+            </div>
         </div>
     </header>
-
 
     <div data-bs-spy="scroll" data-bs-target="#navigation" data-bs-root-margin="0px 0px -40%"
         data-bs-smooth-scroll="true" class="scrollspy-example bg-light rounded-2 wrapper" tabindex="0">
@@ -990,7 +960,7 @@
                                     class="bi bi-geo-alt me-2"></i>{{ siteUrlSettings('site_address') ?? __('Our Head Office') }}
                             </p>
                             <p class="mb-1"><i
-                                    class="bi bi-telephone me-2"></i>{{ siteUrlSettings('site_phone') ?? '01700000000' }}
+                                    class="bi bi-telephone me-2"></i>{{ siteUrlSettings('site_phone') ?? '254700000000' }}
                             </p>
                             <p class="mb-3"><i
                                     class="bi bi-envelope me-2"></i>{{ siteUrlSettings('site_email') ?? 'support@example.com' }}

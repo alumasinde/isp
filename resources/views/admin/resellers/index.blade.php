@@ -70,7 +70,7 @@
                 <div class="card-body p-3 d-flex align-items-center justify-content-between" style="min-height: 85px;">
                     <div>
                         <span class="text-uppercase fw-bold text-muted d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.8px;">{{ __('Total Collections') }}</span>
-                        <h4 class="fw-extrabold text-dark mb-0" style="font-family: 'Outfit', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 1.4rem;">৳{{ number_format($resellers->sum('total_collected'), 2) }}</h4>
+                        <h4 class="fw-extrabold text-dark mb-0" style="font-family: 'Outfit', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 1.4rem;">KSh {{ number_format($resellers->sum('total_collected'), 2) }}</h4>
                     </div>
                     <div class="rounded-3 p-2 d-flex align-items-center justify-content-center" style="background: rgba(14, 165, 233, 0.1); color: #0284c7; width: 40px; height: 40px;">
                         <i class="bi bi-wallet2 fs-5"></i>
@@ -85,7 +85,7 @@
                 <div class="card-body p-3 d-flex align-items-center justify-content-between" style="min-height: 85px;">
                     <div>
                         <span class="text-uppercase fw-bold text-muted d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.8px;">{{ __('Resellers Profit') }}</span>
-                        <h4 class="fw-extrabold text-dark mb-0" style="font-family: 'Outfit', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 1.4rem;">৳{{ number_format($resellers->sum('total_profit'), 2) }}</h4>
+                        <h4 class="fw-extrabold text-dark mb-0" style="font-family: 'Outfit', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 1.4rem;">KSh {{ number_format($resellers->sum('total_profit'), 2) }}</h4>
                     </div>
                     <div class="rounded-3 p-2 d-flex align-items-center justify-content-center" style="background: rgba(40, 167, 69, 0.15); color: #28a745; width: 40px; height: 40px;">
                         <i class="bi bi-graph-up-arrow fs-5"></i>
@@ -100,7 +100,7 @@
                 <div class="card-body p-3 d-flex align-items-center justify-content-between" style="min-height: 85px;">
                     <div>
                         <span class="text-uppercase fw-bold text-muted d-block mb-1" style="font-size: 0.65rem; letter-spacing: 0.8px;">{{ __('Total Paid Out (Cash)') }}</span>
-                        <h4 class="fw-extrabold text-dark mb-0" style="font-family: 'Outfit', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 1.4rem;">৳{{ number_format($resellers->sum('total_payout'), 2) }}</h4>
+                        <h4 class="fw-extrabold text-dark mb-0" style="font-family: 'Outfit', 'Inter', sans-serif; letter-spacing: -0.5px; font-size: 1.4rem;">KSh {{ number_format($resellers->sum('total_payout'), 2) }}</h4>
                     </div>
                     <div class="rounded-3 p-2 d-flex align-items-center justify-content-center" style="background: rgba(124, 58, 237, 0.1); color: #7c3aed; width: 40px; height: 40px;">
                         <i class="bi bi-cash-stack fs-5"></i>
@@ -193,9 +193,9 @@
                                 </td>
                                 <td>{{ $reseller->company ?? 'N/A' }}</td>
                                 <td class="text-center"><span class="badge bg-success-subtle text-success border border-success px-2 py-1">{{ $reseller->commission_percentage }}%</span></td>
-                                <td class="text-end text-muted">৳{{ number_format($reseller->totalCollections(), 2) }}</td>
-                                <td class="text-end fw-bold text-success">৳{{ number_format($reseller->totalProfit(), 2) }}</td>
-                                <td class="text-end fw-bold text-success">৳{{ number_format($reseller->balance, 2) }}</td>
+                                <td class="text-end text-muted">KSh {{ number_format($reseller->totalCollections(), 2) }}</td>
+                                <td class="text-end fw-bold text-success">KSh {{ number_format($reseller->totalProfit(), 2) }}</td>
+                                <td class="text-end fw-bold text-success">KSh {{ number_format($reseller->balance, 2) }}</td>
                                 <td class="text-center">
                                     <span class="badge {{ $reseller->status === 'active' ? 'bg-success-subtle text-success border border-success' : 'bg-danger-subtle text-danger border border-danger' }} px-2.5 py-1 text-uppercase" style="font-size: 0.72rem;">
                                         {{ __($reseller->status) }}
@@ -241,7 +241,7 @@
                                                             </select>
                                                         </div>
                                                         <div class="mb-3">
-                                                            <label class="form-label fw-semibold text-muted mb-1">{{ __('Amount (BDT)') }}</label>
+                                                            <label class="form-label fw-semibold text-muted mb-1">{{ __('Amount (KES)') }}</label>
                                                             <input type="number" step="0.01" name="amount" class="form-control" placeholder="0.00" required min="0.01">
                                                         </div>
                                                         <div class="mb-3">
@@ -423,7 +423,7 @@
                                         <td class="small text-muted text-center">${trx.date}</td>
                                         <td class="small text-dark fw-semibold text-start">${trx.description}</td>
                                         <td class="text-center">${refBadge}</td>
-                                        <td class="text-end fw-bold">৳${trx.amount}</td>
+                                        <td class="text-end fw-bold">KSh ${trx.amount}</td>
                                         <td class="text-center">
                                             <span class="badge ${typeClass} px-2 py-0.5 text-uppercase text-xs" style="font-size:0.7rem;">
                                                 ${trx.type}
